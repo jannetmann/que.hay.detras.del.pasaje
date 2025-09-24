@@ -1,363 +1,92 @@
 :root {
-    --font-base: "montserrat";
-    --font-heading: "monte-stella";
-    /* Colores base inspirados en tránsito */
-    --color-metro-naranja: #F47C20;   /* Naranja del Metro CDMX */
-    --color-taxi-rosa: #EC407A;       /* Rosa de taxis */
-    --color-senal-verde: #2E7D32;     /* Verde de señalamientos */
-    --color-stop-rojo: #D32F2F;       /* Rojo de alto */
-    --color-asfalto: #212121;         /* Asfalto urbano */
-    --color-white: #FFFFFF;          /* Texto sobre fondo oscuro */
-    --color-senal-azul: #0D47A1;     /* Azul de señalamientos */
+  --font-base: "montserrat", sans-serif;
+  --font-heading: "monte-stella", sans-serif;
 
-    /* Roles de diseño */
-    --color-bg: var(--color-white);
-    --color-text: var(--color-asfalto);
-    --color-primary: var(--color-stop-rojo);
-    --color-secondary: var(--color-metro-naranja);
-    --color-accent: var(--color-taxi-rosa);
-
-    /* Breakpoints */
-    --breakpoint-mobile: 0px;
-    --breakpoint-tablet: 768px;
-    --breakpoint-desktop: 1024px;
-
-    /* Tamaños de fuente para el navbar */
-    --font-size-mobile-icon: 2.5rem;
-    --font-size-nav-link: 1.5rem;
-    --font-size-nav-icon: 2em;
-    /* Tamaños de fuente base (mobile first) */
-    --font-size-sm: 1rem;
-    --font-size-base: 1.35rem;
-    --font-size-lg: 1.5rem;
-
-    /* Colores para bloques de código */
-    --code-bg: var(--color-senal-azul);
-    --code-text: var(--color-white);
-    --code-border: rgba(255,255,255,0.12);
+  --rosa-cdmx: #EC407A;
+  --blanco: #ffffff;
+  --asfalto: #212121;
 }
 
-/* Estilos default */
 body {
-    /* Dentro de llaves de las propiedades */
-    font-family: "montserrat", sans-serif;
-    background-color: #fff;
-}
-h1 {
-    font-family: monte-stella, sans-serif;
-background-color: #3D8B34;
-text-align: left ;
-}
-section {
-    width: 80%;
-    margin: 0 auto;
-}
-article{
-    margin-top: 40px;
-    margin-bottom: 40px;
-}
-@media (prefers-color-scheme: dark) {
-    :root {
-        color-scheme: light dark;
-        --color-bg: var(--color-asfalto);
-        --color-text: var(--color-white);
-        --color-primary: var(--color-stop-rojo);
-        --color-secondary: var(--color-metro-naranja);
-        --color-accent: var(--color-taxi-rosa);
-        /* Ajustes de código en oscuro (mantener contraste alto) */
-        --code-bg: var(--color-senal-azul);
-        --code-text: var(--color-white);
-        --code-border: rgba(255,255,255,0.16);
-    }
-}
-
-a {
-    color: var(--color-text);
-    text-decoration: none;
-}
-
-/* Títulos responsive */
-h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading);
-    font-weight: 800;
+  font-family: var(--font-base);
+  margin: 0;
+  padding: 0;
+  background: var(--blanco);
+  color: var(--asfalto);
+  text-align: center;
 }
 
 h1 {
-    color: var(--color-asfalto);
-    font-size: 4em;
-    margin: .2em 0;
-    line-height: 1em;
-}
-
-h2 {
-    font-size: 1.8em;
-    text-transform: uppercase;
-    font-weight: 700;
-    margin-bottom: 1em;
-    letter-spacing: .01em;
-}
-
-/* h2::first-line {
-    font-size: 1.5em;
-    stroke-width: .5px;
-} */
-h3 {
-    color: #007a33;
-    font-size: 1.6em;
-    font-weight: 600;
-    line-height: 1em;
-    letter-spacing: .01em;
-}
-
-h4 {
-    font-size: 1.4em;
-    font-weight: 500;
+  font-family: var(--font-heading);
+  font-size: 4em;
+  margin-top: 1em;
 }
 
 p {
-    max-width: 60ch;
-    text-wrap-style: balance;
+  font-size: 1.2em;
+  margin: 1em auto;
+  max-width: 600px;
 }
 
-img {
-    max-width: 100%;
-    height: auto;
+/* Botón explorar con microbús */
+.explore-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.7em 1.5em;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: var(--asfalto);
+  color: var(--blanco);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
 
-pre, code {
-    background-color: transparent;
-    overflow-x: auto;
-    --scroll-size: 5px;
-}
-/* layout */
-
-header#main-header nav {
-    text-align: center;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-footer#main-footer {
-    border-top: 1px solid var(--color-text);
-    margin-top: 2em;
-    text-align: center;
-    padding: 2em 0 1em 0;
-}
-/* utilidades */
-[class*="color-"] { -webkit-text-stroke: 0px; }
-.color-pink { color: var(--color-taxi-rosa); }
-.color-green { color: var(--color-senal-verde); }
-.color-orange { color: var(--color-metro-naranja); }
-.color-red { color: var(--color-stop-rojo); }
-.color-white { color: var(--color-white); }
-.color-asphalt { color: var(--color-asfalto); }
-
-.stroke-pink { -webkit-text-stroke: 1px var(--color-taxi-rosa); }
-.stroke-green { -webkit-text-stroke: 1px var(--color-senal-verde); }
-.stroke-orange { -webkit-text-stroke: 1px var(--color-metro-naranja); }
-.stroke-red { -webkit-text-stroke: 1px var(--color-stop-rojo); }
-.stroke-white { -webkit-text-stroke: 1px var(--color-white); }
-.stroke-asphalt { -webkit-text-stroke: 1px var(--color-asfalto); }
-
-/* componentes */
-.nav-link {
-    font-size: var(--font-size-mobile-icon);
-    background-color: var(--color-primary);
-    font-family: var(--font-heading);
-    text-decoration: none;
-    padding: 0;
-    font-weight: 800;
-    text-transform: uppercase;
-    width: 20%;
-    border: none;
-    height: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-text);
-    transition: all 0.3s ease;
-    opacity: 0.8;
-    line-height: 1.1em;
-    text-align: center;
-    overflow: hidden;
-    aspect-ratio: 1 / 1;
-    text-align: left;
-    gap: .25em;
-    flex-direction: column;
-}
-.nav-link img {
-    width: 60%;
-    height: auto;
-    object-fit: contain;
-    min-width: 60px;
-    max-width: 100px;
-}
-/* Colores específicos por enlace */
-a#home-link { background-color: var(--color-asfalto); }
-a#mapa-ruta-link { background-color: var(--color-metro-naranja); }
-a#rubrica-link { background-color: var(--color-stop-rojo); }
-a#guia-estilo-link { background-color: var(--color-taxi-rosa); }
-a#proyectos-link { background-color: var(--color-senal-verde); }
-
-/* Mobile: Solo iconos, texto oculto */
-.nav-text {
-    display: none;
+.explore-btn:hover {
+  background: var(--rosa-cdmx);
 }
 
-.nav-link i {
-    font-size: var(--font-size-mobile-icon);
-    min-width: 1.2rem;
+/* Microbús animado */
+.microbus {
+  font-size: 1.5em;
+  display: inline-block;
+  transition: transform 1s ease;
 }
 
-.nav-link.active,
-.nav-link:hover {
-    color: var(--color-white);
-    opacity: 1;
+.explore-btn:hover .microbus {
+  transform: translateX(100px);
 }
 
-/* Tablet: Mostrar texto con tamaño pequeño */
-@media (min-width: 768px) {
-    /* Escalado de tipografía para tablet */
-    :root {
-        --font-size-sm: 1rem;
-        --font-size-base: 1.125rem;
-        --font-size-lg: 1.25rem;
-    }
-    /* Mostrar texto */
-    .nav-link {
-        gap: .35em;
-        aspect-ratio: 1 / .6;
-        font-size: var(--font-size-nav-link);
-    }
-    .nav-link i {
-        font-size: var(--font-size-mobile-icon);
-    }
-    .nav-text {
-        display: inline;
-    }
-}
-
-/* Desktop: Texto completo con tamaño grande */
-@media (min-width: 1024px) {
-    /* Escalado de tipografía para desktop */
-    :root {
-        --font-size-sm: 1.125rem;
-        --font-size-base: 1.5rem;
-        --font-size-lg: 1.75rem;
-    }
-    .nav-link {
-        aspect-ratio: 1 / .3;
-        gap: .35em;
-        font-size: var(--font-size-lg);
-        flex-direction: row;
-    }
-    .nav-link i {
-        font-size: inherit;
-    }
-    h1 {
-        font-size: 5em;
-    }
-}
-
-/* Cards */
-.card {
-    padding: 1em;
-    border: 1px solid var(--color-text);
-    margin-top: 1em;
-    margin-bottom: 1em;
-}
-.card h3 {
-    margin-top: 0;
-}
-.card p {
-    margin-bottom: 0;
-}
-/* Components */
-
-.hero {
-    text-align: center;
-    padding: 1em 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.hero p {
-    font-size: var(--font-size-lg);
-}
-
-.button {
-    font-family: var(--font-heading);
-    font-weight: 800;
-    text-transform: uppercase;
-    background-color: var(--color-primary);
-    color: var(--color-text);
-    border: 1px solid currentColor;
-    border-radius: 0;
-    padding: 0.25em 1em;
-    line-height: 1.42em;
-    font-size: var(--font-size-lg);
-    min-width: 120px;
-    transition: all 0.3s ease;
-    height: auto;
-    margin: 0;
-    background-color: var(--color-asfalto);
-    outline: 1px solid currentColor;
-}
-.button:hover {
-    background-color: var(--color-taxi-rosa);
-    color: var(--color-asfalto);
-    border-color: var(--color-asfalto);
-}
-.button-pink { color: var(--color-taxi-rosa); }
-.button-pink:hover { background-color: var(--color-taxi-rosa); }
-.button-orange { color: var(--color-metro-naranja); }
-.button-orange:hover { background-color: var(--color-metro-naranja); }
-.button-green { color: var(--color-senal-verde); }
-.button-green:hover { background-color: var(--color-senal-verde); }
-.button-red { color: var(--color-stop-rojo); }
-.button-red:hover { background-color: var(--color-stop-rojo); }
-.button-white { color: var(--color-white); }
-.button-white:hover { background-color: var(--color-white); }
-.button-asfalto { color: var(--color-asfalto); }
-.button-asfalto:hover { background-color: var(--color-asfalto); }
-
-.text-center {
-    text-align: center;
+/* Sección de navegación inferior */
+#explorar {
+  margin-top: 8em; /* antes era 5em, ahora bajamos más */
 }
 
 
-/* Espaciado mejorado para secciones */
-section {
-    margin-bottom: 2rem;
+.nav-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1em;
+  margin: 2em auto;
 }
 
-/* Estilos para listas en criterios de evaluación */
-section ul {
-    margin-top: 2rem;
+.nav-buttons a {
+  text-decoration: none;
+  padding: 1em 2em;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: var(--rosa-cdmx);
+  color: var(--blanco);
+  transition: all 0.3s ease;
 }
 
-section li {
-    margin-bottom: 0.5rem;
-    line-height: 1.5;
-}
-
-/* Separadores visuales */
-hr {
-    border: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    margin: 2rem 0;
-}
-
-/* Mejoras para la rúbrica */
-section h3 {
-    color: var(--color-text);
-    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-    padding-bottom: 0.5rem;
-}
-
-section h4 {
-    color: rgba(255, 255, 255, 0.9);
-    font-weight: 600;
+.nav-buttons a:hover {
+  background: var(--blanco);
+  color: var(--rosa-cdmx);
+  border: 2px solid var(--rosa-cdmx);
 }
