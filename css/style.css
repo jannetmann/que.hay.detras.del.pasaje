@@ -1,6 +1,6 @@
 :root {
-    --font-base: 'Roboto', Helvetica, Arial, Lucida, sans-serif;
-    --font-heading: 'Barlow', Helvetica, Arial, Lucida, sans-serif;
+    --font-base: "montserrat";
+    --font-heading: "monte-stella";
     /* Colores base inspirados en tránsito */
     --color-metro-naranja: #F47C20;   /* Naranja del Metro CDMX */
     --color-taxi-rosa: #EC407A;       /* Rosa de taxis */
@@ -50,7 +50,7 @@ text-align: left ;
 }
 section {
     width: 80%;
-    margin: 40% auto;
+    margin: 0 auto;
 }
 article{
     margin-top: 40px;
@@ -94,6 +94,7 @@ h2 {
     text-transform: uppercase;
     font-weight: 700;
     margin-bottom: 1em;
+    letter-spacing: .01em;
 }
 
 /* h2::first-line {
@@ -101,8 +102,11 @@ h2 {
     stroke-width: .5px;
 } */
 h3 {
+    color: #007a33;
     font-size: 1.6em;
     font-weight: 600;
+    line-height: 1em;
+    letter-spacing: .01em;
 }
 
 h4 {
@@ -273,19 +277,12 @@ a#proyectos-link { background-color: var(--color-senal-verde); }
 .hero {
     text-align: center;
     padding: 1em 0;
-    min-height: 400px;
-    height: 50vh;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
 }
 
-@media (min-width: 1024px) {
-    .hero {
-        height: 80vh;
-    }
-}
 .hero p {
     font-size: var(--font-size-lg);
 }
@@ -364,54 +361,3 @@ section h4 {
     color: rgba(255, 255, 255, 0.9);
     font-weight: 600;
 }
-
-/* Estilos específicos para niveles de evaluación en rúbrica */
-.evaluation-card {
-    border-color: currentColor;
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-    transition: all 0.3s ease;
-}
-
-/* Excelente - Verde */
-.evaluation-card.excelente {
-    border-color: var(--color-senal-verde);
-}
-
-.evaluation-card.excelente h4 {
-    color: var(--color-senal-verde);
-    font-weight: 700;
-}
-
-/* Bueno - Naranja */
-.evaluation-card.bueno {
-    border-color: var(--color-metro-naranja);
-}
-
-.evaluation-card.bueno h4 {
-    color: var(--color-metro-naranja);
-    font-weight: 700;
-}
-
-/* Satisfactorio - Azul */
-.evaluation-card.satisfactorio {
-    border-color: var(--color-taxi-rosa);
-}
-
-.evaluation-card.satisfactorio h4 {
-    color: var(--color-taxi-rosa);
-    font-weight: 700;
-}
-
-
-
-/* Necesita Mejora - Rojo */
-.evaluation-card.necesita-mejora {
-    border-color: var(--color-stop-rojo);
-}
-
-.evaluation-card.necesita-mejora h4 {
-    color: var(--color-stop-rojo);
-    font-weight: 700;
-}
-
