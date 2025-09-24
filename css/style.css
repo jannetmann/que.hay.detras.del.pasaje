@@ -90,3 +90,33 @@ p {
   color: var(--rosa-cdmx);
   border: 2px solid var(--rosa-cdmx);
 }
+
+/* Fondo dividido */
+body {
+  margin: 0;
+  font-family: var(--font-base);
+  color: var(--asfalto);
+  text-align: center;
+}
+
+/* Hero con imagen de fondo */
+.hero {
+  background: url("../img/microbus-fondo.jpg") no-repeat center center;
+  background-size: cover;
+  color: var(--blanco);
+  padding: 6em 1em;
+  position: relative;
+}
+
+/* Línea divisoria */
+.divider {
+  height: 4px;
+  background-color: var(--asfalto);
+}
+
+/* Sección inferior con fondo crema */
+#explorar {
+  background: #fdf5e6; /* color crema */
+  padding: 4em 1em;
+}
+
