@@ -16,26 +16,10 @@ body {
   text-align: center;
 }
 
-/* Hero con imagen de fondo */
-.hero {
-  background-image: url("../img/foto-micro-fondo.jpg"); /* ⚠️ Revisa que el archivo exista y se llame EXACTO así */
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  color: var(--blanco);
-  padding: 6em 1em;
-  min-height: 80vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
 h1 {
   font-family: var(--font-heading);
   font-size: 4em;
-  margin: 0.5em 0;
+  margin-top: 1em;
 }
 
 p {
@@ -44,7 +28,7 @@ p {
   max-width: 600px;
 }
 
-/* Botón explorar */
+/* Botón explorar con microbús */
 .explore-btn {
   display: inline-flex;
   align-items: center;
@@ -57,12 +41,15 @@ p {
   color: var(--blanco);
   border: none;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
 
 .explore-btn:hover {
   background: var(--rosa-cdmx);
 }
 
+/* Microbús animado */
 .microbus {
   font-size: 1.5em;
   display: inline-block;
@@ -73,16 +60,9 @@ p {
   transform: translateX(100px);
 }
 
-/* Línea divisoria */
-.divider {
-  height: 4px;
-  background-color: var(--asfalto);
-}
-
-/* Sección inferior con fondo crema */
+/* Sección de navegación inferior */
 #explorar {
-  background: #fdf5e6;
-  padding: 4em 1em;
+  margin-top: 5em;
 }
 
 .nav-buttons {
@@ -109,7 +89,5 @@ p {
   color: var(--rosa-cdmx);
   border: 2px solid var(--rosa-cdmx);
 }
-.hero {
-  background-image: url("../img/foto-micro-fondo.jpg");
-}
+
 
