@@ -16,10 +16,26 @@ body {
   text-align: center;
 }
 
+/* Hero con imagen de fondo */
+.hero {
+  background-image: url("../img/foto-micro-fondo.jpg"); /* ⚠️ Revisa que el archivo exista y se llame EXACTO así */
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  color: var(--blanco);
+  padding: 6em 1em;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 h1 {
   font-family: var(--font-heading);
   font-size: 4em;
-  margin-top: 1em;
+  margin: 0.5em 0;
 }
 
 p {
@@ -28,7 +44,7 @@ p {
   max-width: 600px;
 }
 
-/* Botón explorar con microbús */
+/* Botón explorar */
 .explore-btn {
   display: inline-flex;
   align-items: center;
@@ -41,15 +57,12 @@ p {
   color: var(--blanco);
   border: none;
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
 }
 
 .explore-btn:hover {
   background: var(--rosa-cdmx);
 }
 
-/* Microbús animado */
 .microbus {
   font-size: 1.5em;
   display: inline-block;
@@ -60,11 +73,17 @@ p {
   transform: translateX(100px);
 }
 
-/* Sección de navegación inferior */
-#explorar {
-  margin-top: 8em; /* antes era 5em, ahora bajamos más */
+/* Línea divisoria */
+.divider {
+  height: 4px;
+  background-color: var(--asfalto);
 }
 
+/* Sección inferior con fondo crema */
+#explorar {
+  background: #fdf5e6;
+  padding: 4em 1em;
+}
 
 .nav-buttons {
   display: flex;
@@ -90,41 +109,7 @@ p {
   color: var(--rosa-cdmx);
   border: 2px solid var(--rosa-cdmx);
 }
-
-/* Fondo dividido */
-body {
-  margin: 0;
-  font-family: var(--font-base);
-  color: var(--asfalto);
-  text-align: center;
-}
-
-/* Hero con imagen de fondo */
 .hero {
-  background-image: url("../img/foto-micro-fondo.jpg"); 
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  color: var(--blanco);
-  padding: 6em 1em;
-  min-height: 80vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-
-/* Línea divisoria */
-.divider {
-  height: 4px;
-  background-color: var(--asfalto);
-}
-
-/* Sección inferior con fondo crema */
-#explorar {
-  background: #fdf5e6; /* color crema */
-  padding: 4em 1em;
+  background-image: url("../img/foto-micro-fondo.jpg");
 }
 
