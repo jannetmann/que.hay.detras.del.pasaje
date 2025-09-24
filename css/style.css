@@ -101,12 +101,20 @@ body {
 
 /* Hero con imagen de fondo */
 .hero {
-  background: url("../img/microbus-fondo.jpg") no-repeat center center;
+  background-image: url("../img/foto-micro-fondo.jpg"); 
+  background-repeat: no-repeat;
+  background-position: center center;
   background-size: cover;
   color: var(--blanco);
   padding: 6em 1em;
-  position: relative;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
+
 
 /* Línea divisoria */
 .divider {
