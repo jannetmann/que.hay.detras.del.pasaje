@@ -18,15 +18,48 @@ body {
 
 h1 {
   font-family: var(--font-heading);
-  font-size: 4em;
-  margin-top: 1em;
+  color: #dbe5c0;
+  font-size: 5em;
+  margin: 0.5em 0;
 }
 
 p {
-  font-size: 1.2em;
-  margin: 1em auto;
-  max-width: 600px;
+  font-size: 1.5em;       /* más grande */
+  font-weight: 700;       /* más grueso (negrita fuerte) */
+  letter-spacing: 0.5px;  /* un poquito más de aire entre letras */
+  color: #EC407A;         /* texto blanco */
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+
 }
+.hero h1,
+.hero p {
+  -webkit-text-stroke: 1.5px #1a1919; /* grosor + color del borde */
+  paint-order: stroke fill;
+}
+
+/* Hero con imagen de fondo */
+.hero {
+  /* 🔧 usa el nombre REAL de tu carpeta: IMG o img */
+  background-image: url("../img/foto-micro-fondo.jpeg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+
+  /* ✅ Fallback: si la imagen no carga, al menos se ve el texto */
+  background-color: #000;      /* fondo de respaldo oscuro */
+  color: var(--asfalto);       /* texto oscuro por defecto */
+  padding: 6em 1em;
+  min-height: 70vh;            /* un poco menos alto para probar más rápido */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Cuando confirmes que la foto sí aparece y quieres texto blanco encima: */
+.hero.hero--on-photo { color: var(--blanco); }
+
 
 /* Botón explorar con microbús */
 .explore-btn {
@@ -60,9 +93,16 @@ p {
   transform: translateX(100px);
 }
 
-/* Sección de navegación inferior */
+/* Línea divisoria */
+.divider {
+  height: 4px;
+  background-color: var(--asfalto);
+}
+
+/* Sección inferior con fondo crema */
 #explorar {
-  margin-top: 5em;
+  background: #fdf5e6; /* crema */
+  padding: 4em 1em;
 }
 
 .nav-buttons {
@@ -89,5 +129,13 @@ p {
   color: var(--rosa-cdmx);
   border: 2px solid var(--rosa-cdmx);
 }
+.hero-alt {
+  background: var(--crema); /* fondo plano crema */
+  color: var(--asfalto);   /* texto oscuro */
+  padding: 4em 1em;
+  text-align: center;
+}
+
+
 
 
