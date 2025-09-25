@@ -45,7 +45,7 @@ p {
   background-position: center center;
   background-size: cover;
 
-  /* ✅ Fallback: si la imagen no carga, al menos se ve el texto */
+  /* Fallback: imagen */
   background-color: #000;      /* fondo de respaldo oscuro */
   color: var(--asfalto);       /* texto oscuro por defecto */
   padding: 6em 1em;
@@ -136,6 +136,80 @@ p {
   text-align: center;
 }
 
+/* Fondo crema para páginas internas */
+body.page-interna {
+  background: #fdf5e6;
+  color: var(--asfalto);
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+/* Encabezado interno */
+.header-interno {
+  background: #fdf5e6;
+  padding: 2em 1em;
+  text-align: center;
+  border-bottom: 2px solid var(--asfalto);
+}
+
+.header-interno h1 {
+  font-family: var(--font-heading);
+  font-size: 2.5em;
+  margin: 0 0 0.5em;
+}
+
+.header-interno p {
+  font-size: 1.2em;
+  margin-bottom: 1em;
+}
+
+/* Botón de regresar */
+.back-btn {
+  display: inline-block;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: bold;
+  text-decoration: none;
+  background: var(--rosa-cdmx);
+  color: var(--blanco);
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: var(--blanco);
+  color: var(--rosa-cdmx);
+  border: 2px solid var(--rosa-cdmx);
+}
+
+/* Contenido */
+.contenido {
+  padding: 2em 1em;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+/* Galería de imágenes en Foto Álbum */
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1em;
+  margin-top: 2em;
+}
+
+.galeria img {
+  width: 100%;
+  height: auto;
+  border: 2px solid var(--asfalto);
+}
+
+/* Quitar sombra y contorno en páginas internas */
+.page-interna h1,
+.page-interna p {
+  text-shadow: none !important;
+  -webkit-text-stroke: 0 !important;
+}
 
 
 
