@@ -263,28 +263,18 @@ body.page-interna {
 /* Carrusel horizontal */
 .carrusel {
   display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
   gap: 1em;
-  overflow-x: auto;             /* permite desplazamiento horizontal */
-  scroll-snap-type: x mandatory; /* "pega" cada imagen al deslizar */
-  padding: 1em 0;
+  padding: 1em;
 }
 
 .carrusel img {
-  flex: 0 0 auto;                /* evita que se encojan */
-  width: 300px;                  /* ancho fijo para cada imagen */
+  flex: 0 0 auto;
+  width: 300px;          /* ajusta según quieras */
   height: auto;
-  border: 2px solid var(--asfalto);
-  border-radius: 6px;
-  scroll-snap-align: start;      /* alinea imagenes al inicio */
-  transition: transform 0.3s ease;
+  border-radius: 8px;
+  scroll-snap-align: start;
 }
 
-.carrusel img:hover {
-  transform: scale(1.05);        /* efecto zoom al pasar el mouse */
-}
-
-.carrusel {
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
-}
 
