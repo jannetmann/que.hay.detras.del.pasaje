@@ -20,7 +20,7 @@ h1 {
   font-family: var(--font-heading);
   color: #dbe5c0;
   font-size: 5em;
-  margin: 0.5em 0;
+  margin: 0em 0;
 }
 
 p {
@@ -35,6 +35,10 @@ p {
 .hero p {
   -webkit-text-stroke: 1.5px #1a1919; /* grosor + color del borde */
   paint-order: stroke fill;
+}
+.hero p {
+  margin-top: 0;
+  margin-bottom: 123px ;
 }
 
 /* Hero con imagen de fondo */
