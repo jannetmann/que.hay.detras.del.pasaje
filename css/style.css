@@ -82,6 +82,8 @@ p {
   max-width: 800px;
   margin: 0 auto 1.5em;
   color: #807979;
+  max-width: 60ch;
+  text-align: left;
 }
 
 /* Hero con imagen de fondo */
@@ -258,5 +260,31 @@ body.page-interna {
   -webkit-text-stroke: 0 !important;
 }
 
+/* Carrusel horizontal */
+.carrusel {
+  display: flex;
+  gap: 1em;
+  overflow-x: auto;             /* permite desplazamiento horizontal */
+  scroll-snap-type: x mandatory; /* "pega" cada imagen al deslizar */
+  padding: 1em 0;
+}
 
+.carrusel img {
+  flex: 0 0 auto;                /* evita que se encojan */
+  width: 300px;                  /* ancho fijo para cada imagen */
+  height: auto;
+  border: 2px solid var(--asfalto);
+  border-radius: 6px;
+  scroll-snap-align: start;      /* alinea imagenes al inicio */
+  transition: transform 0.3s ease;
+}
+
+.carrusel img:hover {
+  transform: scale(1.05);        /* efecto zoom al pasar el mouse */
+}
+
+.carrusel {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
 
