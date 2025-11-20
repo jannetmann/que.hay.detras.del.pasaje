@@ -153,14 +153,14 @@
 			<div class="spot-modal__dialog">
 				<div class="spot-modal__header">
 					<h2 class="spot-modal__title" data-spot-modal-title>Detalle</h2>
-					<button class="spot-modal__close" type="button" aria-label="Cerrar" data-spot-modal-close>&times;</button>
+					<button class="spot-modal__close" type="button" aria-label="Cerrar" data-spot-modal-close command="--close-spot-modal">&times;</button>
 				</div>
 				<div class="spot-modal__content" data-spot-modal-content></div>
 			</div>
 		</div>
 
 		<video id="video" loop muted style="display:none">
-			<source src="./video/pano.webm">
+			<source src="./video/dia.mp4">
 		</video>
 
 		<script type="importmap">
@@ -171,55 +171,7 @@
 				}
 			}
 		</script>
-
-		<script>
-			window.VR_CONFIG = {
-				sphereRadius: 5,
-				spots: [
-				{
-					id: 'spot-foto-1',
-					type: 'photo',
-					label: 'Foto',
-					title: 'Archivo histórico',
-					description: 'Documentación fotográfica del interior del pasaje.',
-					media: './img/foto1.jpg',
-					caption: 'Rescate visual 1998',
-					color: '#f97316',
-					spherical: { lon: 35, lat: 8 }
-					},
-					{
-						id: 'spot-galeria-1',
-						type: 'gallery',
-						label: 'Galería',
-						title: 'Galería de detalles',
-						description: 'Selección de texturas y materiales presentes en el sitio.',
-						color: '#22d3ee',
-						items: [
-						{ src: './img/foto2.jpg', alt: 'Detalle 1' },
-						{ src: './img/foto3.jpg', alt: 'Detalle 2' },
-						{ src: './img/foto4.jpg', alt: 'Detalle 3' }
-						],
-						spherical: { lon: -60, lat: -12 }
-						},
-						{
-							id: 'spot-audio-1',
-							type: 'audio',
-							label: 'Testimonio',
-							title: 'Voces del pasaje',
-							description: 'Fragmentos de entrevistas con habitantes.',
-							color: '#a78bfa',
-							audios: [
-							{
-								title: 'Testimonio 01',
-								src: 'https://cdn.pixabay.com/download/audio/2023/03/16/audio_199435682b.mp3?filename=night-street-story-142056.mp3'
-							}
-							],
-							spherical: { lon: 120, lat: 18 }
-						}
-						]
-						};
-		</script>
-
+		<script src="./js/spots-dia.js"></script>
 		<script type="module" src="./js/virtual-reality.js"></script>
 	</body>
 </html>

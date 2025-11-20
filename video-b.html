@@ -5,19 +5,162 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<style>
+			:root {
+				font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+				color-scheme: dark;
+			}
+			
+			*,
+			*::before,
+			*::after {
+				box-sizing: border-box;
+			}
+			
 			body {
 				touch-action: none;
 				padding: 0;
 				margin: 0;
 				overflow: hidden;
+				background-color: #020202;
+				color: #f5f5f5;
+			}
+			
+			#container {
+				position: fixed;
+				inset: 0;
+			}
+			
+			#spots-layer {
+				position: fixed;
+				inset: 0;
+				pointer-events: none;
+			}
+			
+			.spot-button {
+				position: absolute;
+				transform: translate(-50%, -50%);
+				background-color: color-mix( in srgb, var(--spot-color, #ffffff) 80%, transparent );
+				border: 2px solid var(--spot-color, #ffffff);
+				border-radius: 999px;
+				color: #020202;
+				font-weight: 600;
+				padding: 0.35rem 0.8rem;
+				cursor: pointer;
+				pointer-events: auto;
+				transition: transform 150ms ease, box-shadow 150ms ease;
+				box-shadow: 0 0 12px rgba( 0, 0, 0, 0.45 );
+				opacity: 0;
+			}
+			
+			.spot-button:hover {
+				transform: translate(-50%, -50%) scale(1.05);
+				box-shadow: 0 0 18px rgba( 0, 0, 0, 0.65 );
+			}
+			
+			.spot-modal {
+				position: fixed;
+				inset: 0;
+				background: rgba( 0, 0, 0, 0.6 );
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 1.5rem;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 200ms ease;
+			}
+			
+			.spot-modal.is-visible {
+				opacity: 1;
+				pointer-events: auto;
+			}
+			
+			.spot-modal__dialog {
+				background: #111;
+				padding: 1.5rem;
+				border-radius: 1rem;
+				width: min(90vw, 520px);
+				max-height: 90vh;
+				overflow-y: auto;
+				position: relative;
+				box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+			}
+			
+			.spot-modal__header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 1rem;
+				margin-bottom: 1rem;
+			}
+			
+			.spot-modal__title {
+				font-size: 1.25rem;
+				margin: 0;
+			}
+			
+			.spot-modal__close {
+				background: transparent;
+				border: 1px solid #444;
+				color: #f5f5f5;
+				font-size: 1rem;
+				border-radius: 999px;
+				width: 2rem;
+				height: 2rem;
+				cursor: pointer;
+			}
+			
+			.spot-modal__content img {
+				max-width: 100%;
+				display: block;
+				border-radius: 0.5rem;
+			}
+			
+			.spot-modal__gallery {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+				gap: 0.5rem;
+			}
+			
+			.spot-modal__audios {
+				display: flex;
+				flex-direction: column;
+				gap: 1rem;
+			}
+			
+			.spot-modal__audio-item {
+				background: #1d1d1d;
+				padding: 0.75rem;
+				border-radius: 0.5rem;
+			}
+			
+			@media (max-width: 600px) {
+				.spot-modal__dialog {
+					padding: 1rem;
+				}
+				
+				.spot-button {
+					font-size: 0.8rem;
+				}
 			}
 		</style>
 	</head>
 	<body>
-		<div id="container"></div>
+		<div id="container" aria-label="Escena de video 360°"></div>
+		<div id="spots-layer" aria-hidden="true"></div>
 
-		<video id="video" loop muted crossOrigin="anonymous" playsinline style="display:none">
-			<source src="./video/004.mp4">
+		<div id="spot-modal" class="spot-modal" aria-hidden="true" role="dialog" aria-modal="true">
+			<div class="spot-modal__dialog">
+				<div class="spot-modal__header">
+					<h2 class="spot-modal__title" data-spot-modal-title>Detalle</h2>
+					<button class="spot-modal__close" type="button" aria-label="Cerrar" data-spot-modal-close>&times;</button>
+				</div>
+				<div class="spot-modal__content" data-spot-modal-content></div>
+			</div>
+		</div>
+
+		<video id="video" loop muted style="display:none">
+			<source src="./video/pano.webm">
 		</video>
 
 		<script type="importmap">
@@ -27,6 +170,52 @@
 					"three/addons/": "./jsm/"
 				}
 			}
+		</script>
+
+		<script>
+			window.VR_CONFIG = {
+				sphereRadius: 5,
+				spots: [
+				{
+					id: 'spot-b-foto',
+					type: 'photo',
+					label: 'Fachada',
+					title: 'Ingreso principal',
+					description: 'Texto curatorial sobre la fachada del pasaje.',
+					media: './img/foto2.jpg',
+					color: '#facc15',
+					spherical: { lon: -15, lat: 5 }
+					},
+					{
+						id: 'spot-b-gallery',
+						type: 'gallery',
+						label: 'Proceso',
+						title: 'Proceso de restauración',
+						description: 'Secuencia visual del registro del proceso.',
+						color: '#34d399',
+						items: [
+						{ src: './img/foto3.jpg', alt: 'Restauración 1' },
+						{ src: './img/foto4.jpg', alt: 'Restauración 2' }
+						],
+						spherical: { lon: 80, lat: -6 }
+						},
+						{
+							id: 'spot-b-audio',
+							type: 'audio',
+							label: 'Audio',
+							title: 'Testimonio vecinal',
+							description: 'Relato sonoro que acompaña la vista.',
+							color: '#fb7185',
+							audios: [
+							{
+								title: 'Entrevista a María',
+								src: 'https://cdn.pixabay.com/download/audio/2021/09/29/audio_37eecc2cf3.mp3?filename=ambient-piano-10534.mp3'
+							}
+							],
+							spherical: { lon: 150, lat: 22 }
+						}
+						]
+						};
 		</script>
 
 		<script type="module" src="./js/virtual-reality.js"></script>

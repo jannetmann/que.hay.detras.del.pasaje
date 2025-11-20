@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Marcador de spots · Pasaje 360</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			:root {
+				font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+				color-scheme: dark;
+			}
+			
+			*,
+			*::before,
+			*::after {
+				box-sizing: border-box;
+			}
+			
+			body {
+				touch-action: none;
+				padding: 0;
+				margin: 0;
+				overflow: hidden;
+				background-color: #050505;
+				color: #f5f5f5;
+			}
+			
+			#container {
+				position: fixed;
+				inset: 0;
+				z-index: 0;
+			}
+			
+			#spots-layer {
+				position: fixed;
+				inset: 0;
+				pointer-events: none;
+				z-index: 5;
+			}
+			
+			.spot-button {
+				position: absolute;
+				transform: translate(-50%, -50%);
+				background-color: color-mix( in srgb, var(--spot-color, #ffffff) 80%, transparent );
+				border: 2px solid var(--spot-color, #ffffff);
+				border-radius: 999px;
+				color: #020202;
+				font-weight: 600;
+				padding: 0.35rem 0.8rem;
+				cursor: pointer;
+				pointer-events: auto;
+				transition: transform 150ms ease, box-shadow 150ms ease;
+				box-shadow: 0 0 12px rgba( 0, 0, 0, 0.45 );
+				opacity: 0;
+			}
+			
+			.spot-button:hover {
+				transform: translate(-50%, -50%) scale(1.05);
+				box-shadow: 0 0 18px rgba( 0, 0, 0, 0.65 );
+			}
+			
+			.tools-bar {
+				position: fixed;
+				top: 1.25rem;
+				left: 50%;
+				transform: translateX(-50%);
+				z-index: 10;
+				display: flex;
+				gap: 0.5rem;
+				padding: 0.75rem 1rem;
+				border-radius: 999px;
+				background: rgba(0, 0, 0, 0.6);
+				backdrop-filter: blur(12px);
+				box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+			}
+			
+			.tools-bar button {
+				background: #16a34a;
+				border: none;
+				color: #fff;
+				font-weight: 600;
+				border-radius: 999px;
+				padding: 0.5rem 1.25rem;
+				cursor: pointer;
+				transition: background 150ms ease;
+			}
+			
+			.tools-bar button:hover {
+				background: #22c55e;
+			}
+			
+			.spot-modal {
+				position: fixed;
+				inset: 0;
+				background: rgba( 0, 0, 0, 0.6 );
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 1.5rem;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 200ms ease;
+				z-index: 20;
+			}
+			
+			.spot-modal.is-visible {
+				opacity: 1;
+				pointer-events: auto;
+			}
+			
+			.spot-modal__dialog {
+				background: #111;
+				padding: 1.5rem;
+				border-radius: 1rem;
+				width: min(90vw, 520px);
+				max-height: 90vh;
+				overflow-y: auto;
+				position: relative;
+				box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+			}
+			
+			.spot-modal__header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 1rem;
+				margin-bottom: 1rem;
+			}
+			
+			.spot-modal__title {
+				font-size: 1.25rem;
+				margin: 0;
+			}
+			
+			.spot-modal__close {
+				background: transparent;
+				border: 1px solid #444;
+				color: #f5f5f5;
+				font-size: 1rem;
+				border-radius: 999px;
+				width: 2rem;
+				height: 2rem;
+				cursor: pointer;
+			}
+			
+			.marker-modal {
+				position: fixed;
+				inset: 0;
+				background: rgba(0, 0, 0, 0.8);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 2rem;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 200ms ease;
+				z-index: 30;
+			}
+			
+			.marker-modal.is-visible {
+				opacity: 1;
+				pointer-events: auto;
+			}
+			
+			.marker-modal__dialog {
+				background: #0b0b0b;
+				border-radius: 1.25rem;
+				padding: 1.5rem;
+				width: min(960px, 95vw);
+				max-height: 95vh;
+				overflow-y: auto;
+				box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+			}
+			
+			.marker-modal__grid {
+				display: grid;
+				grid-template-columns: 2fr 1fr;
+				gap: 1.5rem;
+			}
+			
+			.marker-modal__header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 1rem;
+			}
+			
+			.marker-modal__header button {
+				background: transparent;
+				border: 1px solid #444;
+				color: #fff;
+				border-radius: 999px;
+				padding: 0.35rem 1rem;
+				cursor: pointer;
+			}
+			
+			.marker-reference {
+				width: 100%;
+				max-height: 70vh;
+				border-radius: 1rem;
+				object-fit: contain;
+				border: 1px solid #333;
+				cursor: crosshair;
+				background: #000;
+			}
+			
+			.marker-sidepanel {
+				background: #151515;
+				border-radius: 1rem;
+				padding: 1rem;
+				display: flex;
+				flex-direction: column;
+				gap: 1rem;
+			}
+			
+			.marker-coordinates {
+				font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+				background: #0f172a;
+				padding: 0.75rem;
+				border-radius: 0.5rem;
+			}
+			
+			pre {
+				margin: 0;
+				white-space: pre-wrap;
+				font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+				background: #0b1120;
+				padding: 1rem;
+				border-radius: 0.75rem;
+				min-height: 160px;
+				overflow-x: auto;
+			}
+			
+			.marker-actions {
+				display: flex;
+				gap: 0.75rem;
+			}
+			
+			.marker-actions button {
+				flex: 1;
+				background: #2563eb;
+				color: #fff;
+				border: none;
+				padding: 0.5rem 0.75rem;
+				border-radius: 0.5rem;
+				cursor: pointer;
+				font-weight: 600;
+			}
+			
+			@media (max-width: 860px) {
+				.marker-modal__grid {
+					grid-template-columns: 1fr;
+				}
+				
+				.marker-reference {
+					max-height: 50vh;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container" aria-label="Escena de video 360°"></div>
+		<div id="spots-layer" aria-hidden="true"></div>
+
+		<div class="tools-bar">
+			<button id="open-marker-modal" type="button">Marcar nuevo spot</button>
+		</div>
+
+		<div id="spot-modal" class="spot-modal" aria-hidden="true" role="dialog" aria-modal="true">
+			<div class="spot-modal__dialog">
+				<div class="spot-modal__header">
+					<h2 class="spot-modal__title" data-spot-modal-title>Detalle</h2>
+					<button class="spot-modal__close" type="button" aria-label="Cerrar" data-spot-modal-close>&times;</button>
+				</div>
+				<div class="spot-modal__content" data-spot-modal-content></div>
+			</div>
+		</div>
+
+		<div id="marker-modal" class="marker-modal" aria-hidden="true" role="dialog" aria-modal="true">
+			<div class="marker-modal__dialog">
+				<div class="marker-modal__header">
+					<div>
+						<h2>Conversión 2D → 3D</h2>
+						<p>Haz clic en el video equirectangular para obtener coordenadas.</p>
+					</div>
+					<button type="button" data-marker-close>Cerrar</button>
+				</div>
+				<div class="marker-modal__grid">
+					<video id="marker-reference" class="marker-reference" src="./video/pano.webm" controls playsinline autoplay muted loop></video>
+					<div class="marker-sidepanel">
+						<div>
+							<h3>Coordenadas</h3>
+							<p class="marker-coordinates" data-marker-coordinates>lon: 0°, lat: 0°</p>
+						</div>
+						<div>
+							<div class="marker-actions">
+								<button type="button" data-marker-copy>Copiar JSON</button>
+							</div>
+						</div>
+						<pre data-marker-snippet>// Haz clic en el video para generar coordenadas</pre>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<video id="video" loop muted style="display:none">
+			<source src="./video/pano.webm">
+		</video>
+
+		<script type="importmap">
+			{
+				"imports": {
+					"three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.180.0/three.module.min.js",
+					"three/addons/": "./jsm/"
+				}
+			}
+		</script>
+
+		<script>
+			window.VR_CONFIG = {
+				sphereRadius: 5,
+				enableModal: true,
+				spots: [
+				{
+					id: 'spot-tool-1',
+					type: 'photo',
+					label: 'Referencia',
+					title: 'Referencia existente',
+					description: 'Ejemplo de spot en modo marcado.',
+					media: './img/foto1.jpg',
+					color: '#f97316',
+					spherical: { lon: -40, lat: 3 }
+				}
+				]
+				};
+		</script>
+
+		<script type="module" src="./js/virtual-reality.js"></script>
+		<script type="module" src="./js/spot-marker.js"></script>
+	</body>
+</html>
