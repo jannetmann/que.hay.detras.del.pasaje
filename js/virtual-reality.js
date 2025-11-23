@@ -404,31 +404,19 @@ function updateSpotScreenPositions() {
 
 function getSpotWorldPosition( spot ) {
 
-	const radius = spot.radius ?? config.sphereRadius;
+	const radius = config.sphereRadius;
 
-	if ( Array.isArray( spot.cartesian ) && spot.cartesian.length === 3 ) {
+	const lonDeg = spot.spherical.lon ?? 0;
+	const latDeg = spot.spherical.lat ?? 0;
 
-		return new THREE.Vector3( ...spot.cartesian ).normalize().multiplyScalar( radius );
+	const phiAngle = THREE.MathUtils.degToRad( 90 - latDeg );
+	const thetaAngle = THREE.MathUtils.degToRad( lonDeg );
 
-	}
+	const x = radius * Math.sin( phiAngle ) * Math.sin( thetaAngle );
+	const y = radius * Math.cos( phiAngle );
+	const z = radius * Math.sin( phiAngle ) * Math.cos( thetaAngle );
 
-	if ( spot.spherical ) {
-
-		const lonDeg = spot.spherical.lon ?? 0;
-		const latDeg = spot.spherical.lat ?? 0;
-
-		const phiAngle = THREE.MathUtils.degToRad( 90 - latDeg );
-		const thetaAngle = THREE.MathUtils.degToRad( lonDeg );
-
-		const x = radius * Math.sin( phiAngle ) * Math.sin( thetaAngle );
-		const y = radius * Math.cos( phiAngle );
-		const z = radius * Math.sin( phiAngle ) * Math.cos( thetaAngle );
-
-		return new THREE.Vector3( x, y, z );
-
-	}
-
-	return null;
+	return new THREE.Vector3( x, y, z );
 
 }
 
