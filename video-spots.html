@@ -286,7 +286,10 @@
 					<button type="button" data-marker-close>Cerrar</button>
 				</div>
 				<div class="marker-modal__grid">
-					<video id="marker-reference" class="marker-reference" src="./video/pano.webm" controls playsinline autoplay muted loop></video>
+					<video id="marker-reference" class="marker-reference" controls playsinline autoplay muted loop>
+						<source src="https://res.cloudinary.com/dpfqraeom/video/upload/v1763918447/detras-del-pasaje-dia.mp4" media="(min-width: 769px)">
+						<source src="https://res.cloudinary.com/dpfqraeom/video/upload/v1763922698/detras-del-pasaje-dia-mobile.mp4" media="(max-width: 768px)">
+					</video>
 					<div class="marker-sidepanel">
 						<div>
 							<h3>Coordenadas</h3>
@@ -304,7 +307,8 @@
 		</div>
 
 		<video id="video" loop muted style="display:none">
-			<source src="./video/pano.webm">
+			<source src="./video/dia.mp4" media="(min-width: 769px)">
+			<source src="./video/dia.mp4" media="(max-width: 768px)">
 		</video>
 
 		<script type="importmap">
