@@ -374,32 +374,20 @@ function updateSpotScreenPositions() {
 
 		const worldPosition = getSpotWorldPosition( spot );
 
-		if ( ! worldPosition ) {
-
-			element.style.opacity = '0';
-			return;
-
-		}
-
 		const projected = worldPosition.clone().project( camera );
 
-		const isVisible = projected.z < 1 && projected.z > - 1;
+		let x = ( projected.x * 0.5 + 0.5 ) * canvasBounds.width + canvasBounds.left;
+		let y = ( - projected.y * 0.5 + 0.5 ) * canvasBounds.height + canvasBounds.top;
 
-		if ( ! isVisible ) {
-
-			element.style.opacity = '0';
-			return;
-
+		if (x < 0) {
+			x = 0;
 		}
-
-		const x = ( projected.x * 0.5 + 0.5 ) * canvasBounds.width + canvasBounds.left;
-		const y = ( - projected.y * 0.5 + 0.5 ) * canvasBounds.height + canvasBounds.top;
-
+		if (y < 0) {
+			y = 0;
+		}
 		element.style.transform = `translate(${ x }px, ${ y }px)`;
-		element.style.opacity = '1';
 
-	} );
-
+	});
 }
 
 function getSpotWorldPosition( spot ) {
