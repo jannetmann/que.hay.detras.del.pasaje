@@ -369,6 +369,8 @@ function updateSpotScreenPositions() {
 	}
 
 	const canvasBounds = renderer.domElement.getBoundingClientRect();
+	const viewportWidth = window.innerWidth;
+	const viewportHeight = window.innerHeight;
 
 	spotElements.forEach( ( { element, spot } ) => {
 
@@ -379,12 +381,25 @@ function updateSpotScreenPositions() {
 		let x = ( projected.x * 0.5 + 0.5 ) * canvasBounds.width + canvasBounds.left;
 		let y = ( - projected.y * 0.5 + 0.5 ) * canvasBounds.height + canvasBounds.top;
 
-		if (x < 0) {
+		// Obtener el tamaño del elemento spot
+		const spotRect = element.getBoundingClientRect();
+		const spotWidth = spotRect.width;
+		const spotHeight = spotRect.height;
+
+		// Limitar x para que el spot se mantenga visible dentro del viewport
+		if ( x < 0 ) {
 			x = 0;
+		} else if ( x + spotWidth > viewportWidth ) {
+			x = viewportWidth - spotWidth;
 		}
-		if (y < 0) {
+
+		// Limitar y para que el spot se mantenga visible dentro del viewport
+		if ( y < 0 ) {
 			y = 0;
+		} else if ( y + spotHeight > viewportHeight ) {
+			y = viewportHeight - spotHeight;
 		}
+
 		element.style.transform = `translate(${ x }px, ${ y }px)`;
 
 	});
