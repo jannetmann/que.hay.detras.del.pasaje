@@ -4,148 +4,51 @@
 		<title>three.js webgl - equirectangular video panorama</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<style>
-			:root {
-				font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-				color-scheme: dark;
-			}
-			
-			*,
-			*::before,
-			*::after {
-				box-sizing: border-box;
-			}
-			
-			body {
-				touch-action: none;
-				padding: 0;
-				margin: 0;
-				overflow: hidden;
-				background-color: #020202;
-				color: #f5f5f5;
-			}
-			
-			#container {
-				position: fixed;
-				inset: 0;
-			}
-			
-			#spots-layer {
-				position: fixed;
-				inset: 0;
-				pointer-events: none;
-			}
-			
-			.spot-button {
-				position: absolute;
-				transform: translate(-50%, -50%);
-				background-color: color-mix( in srgb, var(--spot-color, #ffffff) 80%, transparent );
-				border: 2px solid var(--spot-color, #ffffff);
-				border-radius: 999px;
-				color: #020202;
-				font-weight: 600;
-				padding: 0.35rem 0.8rem;
-				cursor: pointer;
-				pointer-events: auto;
-			}
-			
-			.spot-button:hover {
-				transform: translate(-50%, -50%) scale(1.05);
-				box-shadow: 0 0 18px rgba( 0, 0, 0, 0.65 );
-			}
-			
-			.spot-modal {
-				position: fixed;
-				inset: 0;
-				background: rgba( 0, 0, 0, 0.6 );
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				padding: 1.5rem;
-				opacity: 0;
-				pointer-events: none;
-				transition: opacity 200ms ease;
-			}
-			
-			.spot-modal.is-visible {
-				opacity: 1;
-				pointer-events: auto;
-			}
-			
-			.spot-modal__dialog {
-				background: #111;
-				padding: 1.5rem;
-				border-radius: 1rem;
-				width: min(90vw, 520px);
-				max-height: 90vh;
-				overflow-y: auto;
-				position: relative;
-				box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-			}
-			
-			.spot-modal__header {
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-				gap: 1rem;
-				margin-bottom: 1rem;
-			}
-			
-			.spot-modal__title {
-				font-size: 1.25rem;
-				margin: 0;
-			}
-			
-			.spot-modal__close {
-				background: transparent;
-				border: 1px solid #444;
-				color: #f5f5f5;
-				font-size: 1rem;
-				border-radius: 999px;
-				width: 2rem;
-				height: 2rem;
-				cursor: pointer;
-			}
-			
-			.spot-modal__content img {
-				max-width: 100%;
-				display: block;
-				border-radius: 0.5rem;
-			}
-			
-			.spot-modal__gallery {
-				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-				gap: 0.5rem;
-			}
-			
-			.spot-modal__audios {
-				display: flex;
-				flex-direction: column;
-				gap: 1rem;
-			}
-			
-			.spot-modal__audio-item {
-				background: #1d1d1d;
-				padding: 0.75rem;
-				border-radius: 0.5rem;
-			}
-			
-			@media (max-width: 600px) {
-				.spot-modal__dialog {
-					padding: 1rem;
-				}
-				
-				.spot-button {
-					font-size: 0.8rem;
-				}
-			}
-		</style>
+
+		<!-- Swiper CSS desde CDN -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+		<!-- Estilos personalizados para spots -->
+		<link rel="stylesheet" href="./css/spots.css">
 	</head>
 	<body>
 		<div id="container" aria-label="Escena de video 360°"></div>
 		<div id="spots-layer" aria-hidden="true"></div>
 
+		<!-- Contenedor de spots con botones HTML -->
+		<section id="spots-container">
+			<button class="spot" data-type="gallery" data-target="#gallery-modal-1" data-lon="155" data-lat="-30" data-label="Galería">
+				Galería
+			</button>
+			<button class="spot" data-type="audio" data-target="#audio" data-lon="170" data-lat="25" data-label="Audio">
+				Audio
+			</button>
+		</section>
+
+		<!-- Contenedor de galerías -->
+		<div id="gallery-container">
+			<div id="gallery-modal-1" class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide">
+						<img src="./img/foto1.jpg" alt="Imagen 1">
+					</div>
+					<div class="swiper-slide">
+						<img src="./img/foto2.jpg" alt="Imagen 2">
+					</div>
+				</div>
+				<div class="swiper-pagination"></div>
+				<div class="swiper-button-next"></div>
+				<div class="swiper-button-prev"></div>
+			</div>
+		</div>
+
+		<!-- Elementos de audio -->
+		<audio id="audio" preload="auto">
+			<source src="./audio/audio1.mp3" type="audio/mpeg">
+			<source src="./audio/audio1.ogg" type="audio/ogg">
+		</audio>
+
+		<!-- Modal para galerías -->
 		<div id="spot-modal" class="spot-modal" aria-hidden="true" role="dialog" aria-modal="true">
 			<div class="spot-modal__dialog">
 				<div class="spot-modal__header">
@@ -161,6 +64,11 @@
 			<source src="https://res.cloudinary.com/dpfqraeom/video/upload/v1763922698/detras-del-pasaje-dia-mobile.mp4" media="(max-width: 768px)">
 		</video>
 
+		<!-- ============================================
+		     LIBRERÍAS EXTERNAS
+		     ============================================ -->
+
+		<!-- Three.js - Para la escena 3D -->
 		<script type="importmap">
 			{
 				"imports": {
@@ -169,7 +77,26 @@
 				}
 			}
 		</script>
-		<script src="./js/spots-dia.js"></script>
+
+		<!-- Swiper JS - Para las galerías -->
+		<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+		<!-- ============================================
+		     ARCHIVOS JAVASCRIPT DEL PROYECTO
+		     ============================================
+		     Orden de carga:
+		     1. Clases base (VRScene, SpotManager, etc.)
+		     2. Archivo principal (virtual-reality.js)
+		     ============================================ -->
+
+		<!-- Clases base -->
+		<script type="module" src="./js/VRScene.js"></script>
+		<script src="./js/SpotManager.js"></script>
+		<script src="./js/ModalManager.js"></script>
+		<script src="./js/AudioManager.js"></script>
+		<script src="./js/GalleryManager.js"></script>
+
+		<!-- Archivo principal (debe cargarse al final) -->
 		<script type="module" src="./js/virtual-reality.js"></script>
 	</body>
 </html>
