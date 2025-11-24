@@ -15,11 +15,11 @@
 
 	/**
 	 * @constructor
-	 * @param {HTMLElement} overlayLayer - Capa donde se renderizan los spots
+	 * @param {HTMLElement} spotsRoot - Contenedor donde se definen los spots
 	 * @param {VRScene} vrScene - Instancia de la escena VR
 	 */
-	function SpotManager(overlayLayer, vrScene) {
-		this.overlayLayer = overlayLayer;
+	function SpotManager(spotsRoot, vrScene) {
+		this.spotsRoot = spotsRoot || document.getElementById('spots-container');
 		this.vrScene = vrScene;
 		this.spots = new Map(); // Almacena los spots: id -> {element, spot}
 		this.commandHandlers = {}; // Handlers para comandos de spots
@@ -33,18 +33,12 @@
 	 * Inicializa los spots desde el HTML
 	 */
 	SpotManager.prototype.init = function() {
-		if (!this.overlayLayer) {
-			console.warn('Overlay layer not found');
+		if (!this.spotsRoot) {
+			console.warn('Spots root container not found');
 			return;
 		}
 
-		var spotsContainer = document.getElementById('spots-container');
-		if (!spotsContainer) {
-			console.warn('Spots container not found');
-			return;
-		}
-
-		var spotButtons = spotsContainer.querySelectorAll('.spot');
+		var spotButtons = this.spotsRoot.querySelectorAll('.spot');
 		var self = this;
 
 		spotButtons.forEach(function(button, index) {
@@ -80,30 +74,32 @@
 			element: button
 		};
 
-		// Clonar botón para el overlay
-		var overlayButton = button.cloneNode(true);
-		overlayButton.className = 'spot-button spot';
-		overlayButton.textContent = label;
-		overlayButton.dataset.spotId = spotId;
-		overlayButton.dataset.spotType = spotType;
-		overlayButton.dataset.spotTarget = spotTarget;
-		overlayButton.dataset.lon = lon.toString();
-		overlayButton.dataset.lat = lat.toString();
-		overlayButton.style.setProperty('--spot-color', '#ffffff');
+		// Configurar dataset en el botón existente
+		button.dataset.spotId = spotId;
+		button.dataset.spotType = spotType || '';
+		if (spotTarget) {
+			button.dataset.spotTarget = spotTarget;
+		}
+		button.dataset.lon = lon.toString();
+		button.dataset.lat = lat.toString();
+		button.textContent = label;
+
+		if (!button.style.getPropertyValue('--spot-color')) {
+			button.style.setProperty('--spot-color', '#ffffff');
+		}
 
 		// Configurar comando según el tipo
 		if (spotType === 'gallery') {
-			overlayButton.setAttribute('command', '--open-spot-modal');
+			button.setAttribute('command', '--open-spot-modal');
 		} else if (spotType === 'audio') {
-			overlayButton.setAttribute('command', '--toggle-audio');
+			button.setAttribute('command', '--toggle-audio');
+		} else {
+			button.removeAttribute('command');
 		}
 
-		// Agregar al overlay
-		this.overlayLayer.appendChild(overlayButton);
-
-		// Guardar referencia
+		// Guardar referencia al botón original
 		this.spots.set(spotId, {
-			element: overlayButton,
+			element: button,
 			spot: spot
 		});
 	};

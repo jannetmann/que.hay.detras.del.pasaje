@@ -37,6 +37,10 @@ body {
 	color: #f5f5f5;
 }
 
+video#video {
+	display: none;
+}
+
 /* ============================================
    2. CONTENEDORES PRINCIPALES
    ============================================ */
@@ -54,22 +58,18 @@ body {
 	user-select: none;
 }
 
-/* Capa de overlay para los spots */
-#spots-layer {
+/* Contenedor donde se definen y muestran los spots en HTML */
+#spots-container {
 	position: fixed;
 	inset: 0;
 	pointer-events: none;
-}
-
-/* Contenedor oculto donde se definen los spots en HTML */
-#spots-container {
-	display: none;
 }
 
 /* Contenedor oculto donde se definen las galerías */
 #gallery-container {
 	display: none;
 }
+
 
 /* ============================================
    3. BOTONES DE SPOTS
@@ -90,6 +90,10 @@ body {
 	font-weight: 600;
 	padding: 0.35rem 0.8rem;
 	cursor: pointer;
+	pointer-events: auto;
+}
+
+#spots-container .spot {
 	pointer-events: auto;
 }
 

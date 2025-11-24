@@ -4,7 +4,6 @@
 		<title>three.js webgl - equirectangular video panorama</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-
 		<!-- Swiper CSS desde CDN -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 
@@ -13,7 +12,6 @@
 	</head>
 	<body>
 		<div id="container" aria-label="Escena de video 360°"></div>
-		<div id="spots-layer" aria-hidden="true"></div>
 
 		<!-- Contenedor de spots con botones HTML -->
 		<section id="spots-container">
@@ -27,6 +25,7 @@
 
 		<!-- Contenedor de galerías -->
 		<div id="gallery-container">
+			<!-- Ver demos @ https://swiperjs.com/demos -->
 			<div id="gallery-modal-1" class="swiper-container">
 				<div class="swiper-wrapper">
 					<div class="swiper-slide">
@@ -44,8 +43,8 @@
 
 		<!-- Elementos de audio -->
 		<audio id="audio" preload="auto">
-			<source src="./audio/audio1.mp3" type="audio/mpeg">
-			<source src="./audio/audio1.ogg" type="audio/ogg">
+			<!-- Credits: https://freesound.org/people/alfrodou/sounds/442195/ -->
+			<source src="./audio/mexico-68.mp3" type="audio/mpeg">
 		</audio>
 
 		<!-- Modal para galerías -->
@@ -59,7 +58,7 @@
 			</div>
 		</div>
 
-		<video id="video" loop muted style="display:none" crossorigin="anonymous">
+		<video id="video" loop muted crossorigin="anonymous">
 			<source src="https://res.cloudinary.com/dpfqraeom/video/upload/v1763918447/detras-del-pasaje-dia.mp4" media="(min-width: 769px)">
 			<source src="https://res.cloudinary.com/dpfqraeom/video/upload/v1763922698/detras-del-pasaje-dia-mobile.mp4" media="(max-width: 768px)">
 		</video>

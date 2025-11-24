@@ -54,7 +54,7 @@
 		// Obtener elementos del DOM
 		var container = document.getElementById('container');
 		var video = document.getElementById('video');
-		var overlayLayer = ensureOverlayLayer();
+		var spotsRoot = document.getElementById('spots-container');
 		var modal = document.getElementById('spot-modal');
 
 		// Verificar elementos necesarios
@@ -79,7 +79,7 @@
 		vrScene.init();
 
 		// 2. Gestor de spots
-		spotManager = new SpotManager(overlayLayer, vrScene);
+		spotManager = new SpotManager(spotsRoot, vrScene);
 		spotManager.init();
 
 		// 3. Gestor de modal
@@ -135,21 +135,6 @@
 	// ============================================
 	// FUNCIONES AUXILIARES
 	// ============================================
-
-	/**
-	 * Asegura que existe la capa de overlay para spots
-	 */
-	function ensureOverlayLayer() {
-		var existing = document.getElementById('spots-layer');
-		if (existing) {
-			return existing;
-		}
-
-		var container = document.createElement('div');
-		container.id = 'spots-layer';
-		document.body.appendChild(container);
-		return container;
-	}
 
 	// ============================================
 	// INICIAR APLICACIÓN
