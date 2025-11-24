@@ -1,1 +1,0 @@
-# Qué hay detrás del pasaje
