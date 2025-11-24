@@ -40,6 +40,48 @@ video {
    2. CONTENEDORES PRINCIPALES
    ============================================ */
 
+
+
+/*
+Intro container
+*/
+#intro-container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: var(--blanco);
+	z-index: 1000;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	color: #fff;
+	pointer-events: none;
+}
+  
+#intro-container h1 {
+	font-size: 2em;
+	font-weight: bold;
+	color: #fff;
+}
+
+#intro-container p {
+	font-size: 1.5em;
+	color: #fff;
+}
+
+#intro-container button {
+	pointer-events: auto;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+#intro-container button:hover {
+	background-color: #333;
+	color: #fff;
+}
 /* Contenedor principal de Three.js */
 #container {
 	position: fixed;
@@ -58,11 +100,8 @@ video {
 	position: fixed;
 	inset: 0;
 	pointer-events: none;
-}
-
-/* Contenedor oculto donde se definen las galerías */
-#gallery-container {
 	display: none;
+	opacity: 0;
 }
 
 /* ============================================
@@ -79,14 +118,17 @@ button {
 	background-color: #ffffff;
 	color: #000;
 }
-.spot-button,
 .spot {
 	position: absolute;
 	cursor: pointer;
 	pointer-events: auto;
 	opacity: .8;
 }
-
+.spot.is-active {
+	opacity: 1;
+	background-color: green;
+	color: #fff;
+}
 #spots-container .spot {
 	pointer-events: auto;
 }
@@ -209,12 +251,6 @@ button {
 @media (max-width: 600px) {
 	.spot-modal__dialog {
 		padding: 1rem;
-	}
-	
-	.spot-button,
-	.spot {
-		font-size: 0.8rem;
-		padding: 0.25rem 0.6rem;
 	}
 }
 

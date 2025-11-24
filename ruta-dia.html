@@ -11,33 +11,51 @@
 		<link rel="stylesheet" href="./css/spots.css">
 	</head>
 	<body>
+
+		<section id="intro-container">
+			<h1>¿Qué hay detrás del pasaje?</h1>
+			<p>Un día como conductor de microbús en la Ciudad de México.</p>
+			<button class="explore-btn" id="intro-btn">
+				Entrar
+			</button>
+		</section>
+
+		<!-- Contenedor de la escena 3D -->
 		<div id="container" aria-label="Escena de video 360°"></div>
 
 		<!-- Contenedor de spots con botones HTML -->
 		<section id="spots-container">
-			<button class="spot" data-type="gallery" data-target="#gallery-modal-1" data-lon="155" data-lat="-30" data-label="Galería">
+			<button class="spot" id="gallery-btn" data-lon="155" data-lat="-30">
 				Galería
 			</button>
-			<button class="spot" data-type="audio" data-target="#audio" data-lon="170" data-lat="25" data-label="Audio">
+			<button class="spot" id="audio-btn" data-lon="170" data-lat="25">
 				Audio
 			</button>
 		</section>
 
 		<!-- Contenedor de galerías -->
-		<div id="gallery-container">
-			<!-- Ver demos @ https://swiperjs.com/demos -->
-			<div id="gallery-modal-1" class="swiper-container">
-				<div class="swiper-wrapper">
-					<div class="swiper-slide">
-						<img src="./img/foto1.jpg" alt="Imagen 1">
-					</div>
-					<div class="swiper-slide">
-						<img src="./img/foto2.jpg" alt="Imagen 2">
+		<div id="spot-modal" class="spot-modal" aria-hidden="true" role="dialog" aria-modal="true">
+			<div class="spot-modal__dialog">
+				<div class="spot-modal__header">
+					<h2 class="spot-modal__title" data-spot-modal-title>Detalle</h2>
+					<button id="modal-close-btn" class="spot-modal__close" type="button" aria-label="Cerrar">&times;</button>
+				</div>
+				<div class="spot-modal__content">
+					<!-- Ver demos @ https://swiperjs.com/demos -->
+					<div id="gallery-modal-1" class="swiper-container">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide">
+								<img src="./img/foto1.jpg" alt="Imagen 1">
+							</div>
+							<div class="swiper-slide">
+								<img src="./img/foto2.jpg" alt="Imagen 2">
+							</div>
+						</div>
+						<div class="swiper-pagination"></div>
+						<div class="swiper-button-next"></div>
+						<div class="swiper-button-prev"></div>
 					</div>
 				</div>
-				<div class="swiper-pagination"></div>
-				<div class="swiper-button-next"></div>
-				<div class="swiper-button-prev"></div>
 			</div>
 		</div>
 
@@ -47,20 +65,11 @@
 			<source src="./audio/mexico-68.mp3" type="audio/mpeg">
 		</audio>
 
-		<!-- Modal para galerías -->
-		<div id="spot-modal" class="spot-modal" aria-hidden="true" role="dialog" aria-modal="true">
-			<div class="spot-modal__dialog">
-				<div class="spot-modal__header">
-					<h2 class="spot-modal__title" data-spot-modal-title>Detalle</h2>
-					<button class="spot-modal__close" type="button" aria-label="Cerrar" data-spot-modal-close>&times;</button>
-				</div>
-				<div class="spot-modal__content" data-spot-modal-content></div>
-			</div>
-		</div>
-
 		<video id="video" loop muted crossorigin="anonymous">
 			<source src="https://res.cloudinary.com/dpfqraeom/video/upload/v1763918447/detras-del-pasaje-dia.mp4" media="(min-width: 769px)">
 			<source src="https://res.cloudinary.com/dpfqraeom/video/upload/v1763922698/detras-del-pasaje-dia-mobile.mp4" media="(max-width: 768px)">
+			<!-- <source src="https://res.cloudinary.com/dpfqraeom/video/upload/v1763918456/detras-del-pasaje-noche.mp4" media="(min-width: 769px)">
+			<source src="https://res.cloudinary.com/dpfqraeom/video/upload/v1763922699/detras-del-pasaje-noche-mobile.mp4" media="(max-width: 768px)"> -->
 		</video>
 
 		<!-- ============================================
@@ -86,6 +95,10 @@
 		     Todos los módulos se cargan desde virtual-reality.js
 		     ============================================
 		-->
+		<script src="./js/AudioManager.js"></script>
+		<script src="./js/GalleryManager.js"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
 		<script type="module" src="./js/virtual-reality.js"></script>
 	</body>
 </html>
