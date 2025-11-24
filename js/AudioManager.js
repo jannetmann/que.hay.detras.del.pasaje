@@ -4,84 +4,95 @@
  * Esta clase se encarga de:
  * - Reproducir y pausar elementos de audio
  * - Toggle entre play/pause
+ * - Manejar eventos de clic en botones de audio
  * 
  * Para agregar audio: crea elementos <audio> en el HTML y referencia con data-target
  */
 
-(function() {
-	'use strict';
-
+export class AudioManager {
 	/**
 	 * @constructor
 	 */
-	function AudioManager() {
+	constructor() {
 		this.audioElements = new Map(); // Cache de elementos de audio
+	}
+
+	/**
+	 * Maneja el clic en un spot de audio
+	 * @param {Object} spot - Objeto spot con información del botón
+	 * @param {Event} event - Evento de clic
+	 */
+	handleSpotClick(spot, event) {
+		if (spot.type !== 'audio') {
+			return;
+		}
+
+		if (spot.target) {
+			this.toggle(spot.target);
+		} else {
+			console.warn('Audio spot has no target specified');
+		}
 	}
 
 	/**
 	 * Toggle de reproducción de audio
 	 * @param {string} audioSelector - Selector CSS del elemento de audio
 	 */
-	AudioManager.prototype.toggle = function(audioSelector) {
-		var audioElement = this.getAudioElement(audioSelector);
+	toggle(audioSelector) {
+		const audioElement = this.getAudioElement(audioSelector);
 		
 		if (!audioElement) {
-			console.warn('Audio element not found: ' + audioSelector);
+			console.warn(`Audio element not found: ${audioSelector}`);
 			return;
 		}
 
 		// Toggle play/pause
 		if (audioElement.paused) {
-			audioElement.play().catch(function(error) {
+			audioElement.play().catch((error) => {
 				console.error('Error playing audio:', error);
 			});
 		} else {
 			audioElement.pause();
 		}
-	};
+	}
 
 	/**
 	 * Obtiene un elemento de audio (con cache)
 	 */
-	AudioManager.prototype.getAudioElement = function(selector) {
+	getAudioElement(selector) {
 		// Verificar cache
 		if (this.audioElements.has(selector)) {
 			return this.audioElements.get(selector);
 		}
 
 		// Buscar en el DOM
-		var element = document.querySelector(selector);
+		const element = document.querySelector(selector);
 		if (element) {
 			this.audioElements.set(selector, element);
 		}
 
 		return element;
-	};
+	}
 
 	/**
 	 * Reproduce un audio
 	 */
-	AudioManager.prototype.play = function(audioSelector) {
-		var audioElement = this.getAudioElement(audioSelector);
+	play(audioSelector) {
+		const audioElement = this.getAudioElement(audioSelector);
 		if (audioElement) {
-			audioElement.play().catch(function(error) {
+			audioElement.play().catch((error) => {
 				console.error('Error playing audio:', error);
 			});
 		}
-	};
+	}
 
 	/**
 	 * Pausa un audio
 	 */
-	AudioManager.prototype.pause = function(audioSelector) {
-		var audioElement = this.getAudioElement(audioSelector);
+	pause(audioSelector) {
+		const audioElement = this.getAudioElement(audioSelector);
 		if (audioElement) {
 			audioElement.pause();
 		}
-	};
-
-	// Exportar
-	window.AudioManager = AudioManager;
-
-})();
-
+	}
+}

@@ -12,6 +12,7 @@
 
 import * as THREE from 'three';
 
+export class VRScene {
 	/**
 	 * @constructor
 	 * @param {Object} config - Configuración de la escena
@@ -19,7 +20,7 @@ import * as THREE from 'three';
 	 * @param {HTMLElement} config.container - Contenedor donde se renderiza
 	 * @param {HTMLElement} config.video - Elemento de video para la textura
 	 */
-	function VRScene(config) {
+	constructor(config) {
 		// Configuración
 		this.config = {
 			sphereRadius: config.sphereRadius || 5,
@@ -66,7 +67,7 @@ import * as THREE from 'three';
 	/**
 	 * Inicializa la escena 3D
 	 */
-	VRScene.prototype.init = function() {
+	init() {
 		if (!this.config.container) {
 			throw new Error('Container element not found');
 		}
@@ -87,7 +88,7 @@ import * as THREE from 'three';
 		this.scene = new THREE.Scene();
 
 		// Crear geometría de esfera
-		var geometry = new THREE.SphereGeometry(
+		const geometry = new THREE.SphereGeometry(
 			this.config.sphereRadius,
 			60,
 			40
@@ -103,9 +104,9 @@ import * as THREE from 'three';
 		this.config.video.play();
 
 		// Crear textura desde el video
-		var texture = new THREE.VideoTexture(this.config.video);
+		const texture = new THREE.VideoTexture(this.config.video);
 		texture.colorSpace = THREE.SRGBColorSpace;
-		var material = new THREE.MeshBasicMaterial({ map: texture });
+		const material = new THREE.MeshBasicMaterial({ map: texture });
 
 		// Crear malla y agregar a la escena
 		this.mesh = new THREE.Mesh(geometry, material);
@@ -123,26 +124,27 @@ import * as THREE from 'three';
 
 		// Configurar resize
 		window.addEventListener('resize', this.onWindowResize);
-	};
+	}
 
 	/**
 	 * Configura los event listeners para la interacción
 	 */
-	VRScene.prototype.setupEvents = function() {
-		var canvas = this.renderer.domElement;
+	setupEvents() {
+		const canvas = this.renderer.domElement;
 		canvas.addEventListener('pointerdown', this.onPointerDown);
 		document.addEventListener('pointermove', this.onPointerMove);
 		document.addEventListener('pointerup', this.onPointerUp);
-	};
+	}
 
 	/**
 	 * Maneja el inicio del arrastre
 	 */
-	VRScene.prototype.onPointerDown = function(event) {
+	onPointerDown(event) {
 		// No permitir interacción si el modal está abierto
 		if (this.isModalOpen || 
 			event.target.closest('.spot-modal') || 
-			event.target.closest('.spot-button')) {
+			event.target.closest('.spot-button') ||
+			event.target.closest('.spot')) {
 			return;
 		}
 
@@ -153,12 +155,12 @@ import * as THREE from 'three';
 		this.onPointerDownLat = this.lat;
 
 		event.stopPropagation();
-	};
+	}
 
 	/**
 	 * Maneja el movimiento durante el arrastre
 	 */
-	VRScene.prototype.onPointerMove = function(event) {
+	onPointerMove(event) {
 		if (this.isModalOpen) {
 			return;
 		}
@@ -172,32 +174,32 @@ import * as THREE from 'three';
 			this.lon = (this.onPointerDownPointerX - event.clientX) * 0.1 + this.onPointerDownLon;
 			this.lat = (this.onPointerDownPointerY - event.clientY) * 0.1 + this.onPointerDownLat;
 		}
-	};
+	}
 
 	/**
 	 * Maneja el fin del arrastre
 	 */
-	VRScene.prototype.onPointerUp = function(event) {
+	onPointerUp(event) {
 		if (event && event.target && event.target.closest('.spot-modal')) {
 			return;
 		}
 
 		this.isUserInteracting = false;
-	};
+	}
 
 	/**
 	 * Maneja el redimensionamiento de la ventana
 	 */
-	VRScene.prototype.onWindowResize = function() {
+	onWindowResize() {
 		this.camera.aspect = window.innerWidth / window.innerHeight;
 		this.camera.updateProjectionMatrix();
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
-	};
+	}
 
 	/**
 	 * Bucle de animación que se ejecuta cada frame
 	 */
-	VRScene.prototype.animate = function() {
+	animate() {
 		// Limitar la latitud para evitar voltear la cámara
 		this.lat = Math.max(-85, Math.min(85, this.lat));
 
@@ -220,7 +222,7 @@ import * as THREE from 'three';
 		if (this.updateSpotsCallback) {
 			this.updateSpotsCallback(this.camera, this.renderer);
 		}
-	};
+	}
 
 	/**
 	 * Convierte coordenadas esféricas a posición 3D
@@ -228,33 +230,30 @@ import * as THREE from 'three';
 	 * @param {number} lat - Latitud en grados
 	 * @returns {THREE.Vector3} Posición en el espacio 3D
 	 */
-	VRScene.prototype.sphericalToWorld = function(lon, lat) {
-		var radius = this.config.sphereRadius;
-		var phi = THREE.MathUtils.degToRad(90 - lat);
-		var theta = THREE.MathUtils.degToRad(lon);
+	sphericalToWorld(lon, lat) {
+		const radius = this.config.sphereRadius;
+		const phi = THREE.MathUtils.degToRad(90 - lat);
+		const theta = THREE.MathUtils.degToRad(lon);
 
-		var x = radius * Math.sin(phi) * Math.sin(theta);
-		var y = radius * Math.cos(phi);
-		var z = radius * Math.sin(phi) * Math.cos(theta);
+		const x = radius * Math.sin(phi) * Math.sin(theta);
+		const y = radius * Math.cos(phi);
+		const z = radius * Math.sin(phi) * Math.cos(theta);
 
 		return new THREE.Vector3(x, y, z);
-	};
+	}
 
 	/**
 	 * Establece el estado del modal (para deshabilitar interacción)
 	 */
-	VRScene.prototype.setModalOpen = function(isOpen) {
+	setModalOpen(isOpen) {
 		this.isModalOpen = isOpen;
 		this.isUserInteracting = false;
-	};
+	}
 
 	/**
 	 * Establece el callback para actualizar posiciones de spots
 	 */
-	VRScene.prototype.setUpdateSpotsCallback = function(callback) {
+	setUpdateSpotsCallback(callback) {
 		this.updateSpotsCallback = callback;
-	};
-
-	// Exportar al scope global
-	window.VRScene = VRScene;
-
+	}
+}

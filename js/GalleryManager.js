@@ -5,26 +5,59 @@
  * - Inicializar Swiper cuando se abre una galería
  * - Aislar eventos de Swiper para que no interfieran con Three.js
  * - Clonar contenido de galerías al modal
+ * - Manejar eventos de clic en botones de galería
  * 
  * Requiere: Swiper desde CDN
  * Para personalizar: modifica las opciones en initialize()
  */
 
-(function() {
-	'use strict';
-
+export class GalleryManager {
 	/**
 	 * @constructor
+	 * @param {ModalManager} modalManager - Instancia del gestor de modales
 	 */
-	function GalleryManager() {
+	constructor(modalManager) {
+		this.modalManager = modalManager;
 		this.swiperInstances = new Map(); // Cache de instancias de Swiper
+	}
+
+	/**
+	 * Maneja el clic en un spot de galería
+	 * @param {Object} spot - Objeto spot con información del botón
+	 * @param {Event} event - Evento de clic
+	 */
+	handleSpotClick(spot, event) {
+		if (spot.type !== 'gallery') {
+			return;
+		}
+
+		if (!this.modalManager) {
+			console.warn('ModalManager not available');
+			return;
+		}
+
+		if (!spot.target) {
+			console.warn('Gallery spot has no target specified');
+			return;
+		}
+
+		// Renderizar contenido de la galería
+		const content = this.renderContent(spot.target);
+
+		// Abrir modal con el contenido
+		this.modalManager.open(spot, () => content);
+
+		// Inicializar Swiper si hay contenido
+		if (content && this.modalManager.modalContent) {
+			this.initialize(this.modalManager.modalContent);
+		}
 	}
 
 	/**
 	 * Inicializa Swiper en un contenedor
 	 * @param {HTMLElement} container - Contenedor donde buscar .swiper-container
 	 */
-	GalleryManager.prototype.initialize = function(container) {
+	initialize(container) {
 		// Verificar que Swiper esté cargado
 		if (typeof Swiper === 'undefined') {
 			console.warn('Swiper library not loaded. Make sure to include Swiper from CDN.');
@@ -32,7 +65,7 @@
 		}
 
 		// Buscar contenedor de Swiper
-		var swiperContainer = container.querySelector('.swiper-container');
+		const swiperContainer = container.querySelector('.swiper-container');
 		if (!swiperContainer) {
 			return;
 		}
@@ -44,7 +77,7 @@
 		}
 
 		// Crear nueva instancia de Swiper
-		var swiperInstance = new Swiper(swiperContainer, {
+		const swiperInstance = new Swiper(swiperContainer, {
 			slidesPerView: 1,
 			spaceBetween: 10,
 			navigation: {
@@ -71,60 +104,55 @@
 		// Guardar instancia
 		swiperContainer.swiperInstance = swiperInstance;
 		this.swiperInstances.set(swiperContainer, swiperInstance);
-	};
+	}
 
 	/**
 	 * Aísla eventos de Swiper para evitar conflictos con Three.js
 	 */
-	GalleryManager.prototype.isolateSwiperEvents = function(container) {
+	isolateSwiperEvents(container) {
 		// Prevenir propagación de eventos táctiles
-		container.addEventListener('touchstart', function(e) {
+		container.addEventListener('touchstart', (e) => {
 			e.stopPropagation();
 		}, { passive: true });
 
-		container.addEventListener('touchmove', function(e) {
+		container.addEventListener('touchmove', (e) => {
 			e.stopPropagation();
 		}, { passive: true });
 
-		container.addEventListener('touchend', function(e) {
+		container.addEventListener('touchend', (e) => {
 			e.stopPropagation();
 		}, { passive: true });
 
 		// Prevenir propagación de eventos pointer
-		container.addEventListener('pointerdown', function(e) {
+		container.addEventListener('pointerdown', (e) => {
 			e.stopPropagation();
 		});
 
-		container.addEventListener('pointermove', function(e) {
+		container.addEventListener('pointermove', (e) => {
 			e.stopPropagation();
 		});
 
-		container.addEventListener('pointerup', function(e) {
+		container.addEventListener('pointerup', (e) => {
 			e.stopPropagation();
 		});
-	};
+	}
 
 	/**
 	 * Renderiza el contenido de una galería para el modal
 	 * @param {string} gallerySelector - Selector CSS de la galería
 	 * @returns {HTMLElement|null} Elemento clonado de la galería
 	 */
-	GalleryManager.prototype.renderContent = function(gallerySelector) {
-		var galleryContainer = document.querySelector(gallerySelector);
+	renderContent(gallerySelector) {
+		const galleryContainer = document.querySelector(gallerySelector);
 		
 		if (!galleryContainer) {
 			return null;
 		}
 
 		// Clonar el contenido de la galería
-		var galleryClone = galleryContainer.cloneNode(true);
+		const galleryClone = galleryContainer.cloneNode(true);
 		galleryClone.style.display = 'block';
 		
 		return galleryClone;
-	};
-
-	// Exportar
-	window.GalleryManager = GalleryManager;
-
-})();
-
+	}
+}

@@ -5,19 +5,18 @@
  * - Abrir y cerrar el modal
  * - Renderizar el contenido según el tipo de spot
  * - Aislar eventos del modal para que no interfieran con Three.js
+ * - Manejar eventos de clic en el botón de cerrar
  * 
  * Para personalizar: modifica los estilos en spots.css
  */
 
-(function() {
-	'use strict';
-
+export class ModalManager {
 	/**
 	 * @constructor
 	 * @param {HTMLElement} modalElement - Elemento del modal
 	 * @param {VRScene} vrScene - Instancia de la escena VR
 	 */
-	function ModalManager(modalElement, vrScene) {
+	constructor(modalElement, vrScene) {
 		this.modal = modalElement;
 		this.vrScene = vrScene;
 		this.modalTitle = null;
@@ -29,12 +28,13 @@
 		this.close = this.close.bind(this);
 		this.handleModalClick = this.handleModalClick.bind(this);
 		this.handleKeyDown = this.handleKeyDown.bind(this);
+		this.handleCloseClick = this.handleCloseClick.bind(this);
 	}
 
 	/**
 	 * Inicializa el modal
 	 */
-	ModalManager.prototype.init = function() {
+	init() {
 		if (!this.modal) {
 			console.warn('Modal element not found');
 			return;
@@ -46,35 +46,40 @@
 
 		// Configurar botón de cerrar
 		if (this.modalCloseButton) {
-			this.modalCloseButton.setAttribute('command', '--close-spot-modal');
-			this.modalCloseButton.addEventListener('click', function(event) {
-				event.stopPropagation();
-				this.close();
-			}.bind(this));
+			this.modalCloseButton.addEventListener('click', this.handleCloseClick);
 		}
 
 		// Configurar clic fuera del modal
 		this.modal.addEventListener('click', this.handleModalClick);
 
 		// Prevenir propagación de eventos pointer
-		this.modal.addEventListener('pointerdown', function(e) {
+		this.modal.addEventListener('pointerdown', (e) => {
 			e.stopPropagation();
 		}, true);
-		this.modal.addEventListener('pointermove', function(e) {
+		this.modal.addEventListener('pointermove', (e) => {
 			e.stopPropagation();
 		}, true);
-		this.modal.addEventListener('pointerup', function(e) {
+		this.modal.addEventListener('pointerup', (e) => {
 			e.stopPropagation();
 		}, true);
 
 		// Configurar tecla Escape
 		document.addEventListener('keydown', this.handleKeyDown);
-	};
+	}
+
+	/**
+	 * Maneja el clic en el botón de cerrar
+	 */
+	handleCloseClick(event) {
+		event.stopPropagation();
+		event.preventDefault();
+		this.close();
+	}
 
 	/**
 	 * Abre el modal con el contenido del spot
 	 */
-	ModalManager.prototype.open = function(spot, contentRenderer) {
+	open(spot, contentRenderer) {
 		if (!this.modal || !this.modalContent || !this.modalTitle) {
 			return;
 		}
@@ -93,19 +98,19 @@
 
 		// Limpiar y renderizar contenido
 		this.modalContent.innerHTML = '';
-		var content = contentRenderer(spot);
+		const content = contentRenderer(spot);
 		
 		if (typeof content === 'string') {
 			this.modalContent.innerHTML = content;
 		} else if (content) {
 			this.modalContent.appendChild(content);
 		}
-	};
+	}
 
 	/**
 	 * Cierra el modal
 	 */
-	ModalManager.prototype.close = function() {
+	close() {
 		if (!this.modal) {
 			return;
 		}
@@ -116,12 +121,12 @@
 
 		// Habilitar interacción de Three.js
 		this.vrScene.setModalOpen(false);
-	};
+	}
 
 	/**
 	 * Maneja clics en el modal
 	 */
-	ModalManager.prototype.handleModalClick = function(event) {
+	handleModalClick(event) {
 		// Prevenir propagación dentro del diálogo
 		if (event.target.closest('.spot-modal__dialog')) {
 			event.stopPropagation();
@@ -131,27 +136,22 @@
 		if (event.target === this.modal) {
 			this.close();
 		}
-	};
+	}
 
 	/**
 	 * Maneja teclas del teclado
 	 */
-	ModalManager.prototype.handleKeyDown = function(event) {
+	handleKeyDown(event) {
 		if (event.key === 'Escape' && this.isOpen) {
 			event.stopPropagation();
 			this.close();
 		}
-	};
+	}
 
 	/**
 	 * Verifica si el modal está abierto
 	 */
-	ModalManager.prototype.getIsOpen = function() {
+	getIsOpen() {
 		return this.isOpen;
-	};
-
-	// Exportar
-	window.ModalManager = ModalManager;
-
-})();
-
+	}
+}
