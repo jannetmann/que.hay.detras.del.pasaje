@@ -254,3 +254,84 @@ button {
 	}
 }
 
+.spot-modal .swiper-slide img {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1920/1280;
+    object-fit: contain;
+    max-width: 1920px;
+    max-height: 1280px;
+    margin: 0 auto;
+    display: block;
+}
+
+/* Tipografías globales */
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Título principal estilo Futura Display */
+#intro-container h1,
+#intro-container h2,
+.logo-title {
+    font-family: 'League Spartan', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+/* ========================================= */
+/*   ESTILOS COMPLETOS DE LA PANTALLA INTRO */
+/* ========================================= */
+
+#intro-container {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    background: rgba(0,0,0,0.45);
+    z-index: 999;
+}
+
+/* Título principal estilo Futura Display (League Spartan) */
+#intro-container h1 {
+    font-family: 'League Spartan', sans-serif;
+    font-size: 4rem;
+    font-weight: 800;
+    color: #ffe66d;
+    line-height: 0.9;
+    margin: 1rem 0 2rem 0;
+    text-shadow: 0px 4px 8px rgba(0,0,0,0.7);
+    text-transform: uppercase;
+}
+
+/* Icono ENTRAR */
+.intro-enter-icon {
+    width: 260px;
+    cursor: pointer;
+    margin: 2rem 0;
+    transition: transform 0.2s ease;
+}
+
+.intro-enter-icon:hover {
+    transform: scale(1.08);
+}
+
+/* Caja amarilla del texto */
+.intro-info-box {
+    background: #ffe66d;
+    max-width: 650px;
+    padding: 1.5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.4;
+    color: black;
+    border-radius: 10px;
+    text-align: left;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    margin-top: 2rem;
+}
