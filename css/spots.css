@@ -272,28 +272,16 @@ button {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.45);  /* ← CAMBIO IMPORTANTE */
+    background: rgba(0,0,0,0.45);   /* oscuro transparente sobre el video */
     z-index: 1000;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;   /* ← para que no se amontone arriba */
+    justify-content: space-between;  /* reparte: logo / botón / texto */
     align-items: center;
     text-align: center;
     color: #fff;
-    padding-top: 5rem;             /* ← espacio para centrar todo visualmente */
+    padding: 3rem 2rem 3rem;         /* margen arriba y abajo */
     pointer-events: auto;
-}
-
-/* TÍTULO PRINCIPAL */
-#intro-container h1 {
-    font-family: 'League Spartan', sans-serif;
-    font-size: 4.5rem;
-    font-weight: 800;
-    color: #ffe66d;
-    text-transform: uppercase;
-    line-height: 0.9;
-    margin: 2rem 0 2rem 0;
-    text-shadow: 0px 4px 8px rgba(0,0,0,0.7);
 }
 
 /* ICONO SVG */
