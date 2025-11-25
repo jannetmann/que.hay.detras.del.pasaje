@@ -15,7 +15,8 @@ node_modules/
 
 # Logs
 *.log
-
+*video/*.mp4
+*video/*.webm
 # OS generated files
 .DS_Store
 .DS_Store?

@@ -1,0 +1,256 @@
+/* ============================================
+   SPOTS.CSS - Estilos para la experiencia VR
+   ============================================
+   
+   Este archivo contiene todos los estilos necesarios
+   para la visualización de spots interactivos en 360°.
+   
+   Estructura:
+   1. Variables y reset básico
+   2. Contenedores principales
+   3. Botones de spots
+   4. Modal y galerías
+   5. Media queries
+   ============================================ */
+
+/* ============================================
+   1. VARIABLES Y RESET BÁSICO
+   ============================================ */
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+body {
+	touch-action: none;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+video {
+	visibility: hidden;
+	pointer-events: none;
+	opacity: 0;
+}
+
+/* ============================================
+   2. CONTENEDORES PRINCIPALES
+   ============================================ */
+
+
+
+/*
+Intro container
+*/
+#intro-container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: var(--blanco);
+	z-index: 1000;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	color: #fff;
+	pointer-events: none;
+}
+  
+#intro-container h1 {
+	font-size: 2em;
+	font-weight: bold;
+	color: #fff;
+}
+
+#intro-container p {
+	font-size: 1.5em;
+	color: #fff;
+}
+
+#intro-container button {
+	pointer-events: auto;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+#intro-container button:hover {
+	background-color: #333;
+	color: #fff;
+}
+/* Contenedor principal de Three.js */
+#container {
+	position: fixed;
+	inset: 0;
+	touch-action: none;
+}
+
+/* Canvas de Three.js - captura eventos de interacción */
+#container canvas {
+	touch-action: none;
+	user-select: none;
+}
+
+/* Contenedor donde se definen y muestran los spots en HTML */
+#spots-container {
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	display: none;
+	opacity: 0;
+}
+
+/* ============================================
+   3. BOTONES DE SPOTS
+   ============================================
+   
+   Los botones aparecen flotando en la escena 360°
+   y se posicionan dinámicamente según las coordenadas 3D
+   ============================================ */
+
+button {
+	border: none;
+	outline: none;
+	background-color: #ffffff;
+	color: #000;
+}
+.spot {
+	position: absolute;
+	cursor: pointer;
+	pointer-events: auto;
+	opacity: .8;
+}
+.spot.is-active {
+	opacity: 1;
+	background-color: green;
+	color: #fff;
+}
+#spots-container .spot {
+	pointer-events: auto;
+}
+
+.spot-button:hover,
+.spot:hover {
+	opacity: 1;
+}
+
+/* ============================================
+   4. MODAL Y GALERÍAS
+   ============================================
+   
+   El modal se muestra cuando se hace clic en un spot
+   de tipo "gallery". Contiene el contenido de Swiper.
+   ============================================ */
+
+/* Modal principal */
+.spot-modal {
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.6);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1.5rem;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 200ms ease;
+	z-index: 1000;
+	touch-action: pan-y;
+}
+
+.spot-modal.is-visible {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+/* Diálogo del modal */
+.spot-modal__dialog {
+	background: #111;
+	padding: 1.5rem;
+	width: min(90vw, 520px);
+	max-height: 90vh;
+	overflow-y: auto;
+	position: relative;
+	touch-action: pan-y pinch-zoom;
+}
+
+/* Header del modal */
+.spot-modal__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-bottom: 1rem;
+}
+
+.spot-modal__title {
+	font-size: 1.25rem;
+	margin: 0;
+}
+
+/* Botón de cerrar */
+.spot-modal__close {
+	background: transparent;
+	border: 1px solid #444;
+	color: #f5f5f5;
+	font-size: 1rem;
+	width: 2rem;
+	height: 2rem;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+}
+
+.spot-modal__close:hover {
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Contenido del modal */
+.spot-modal__content img {
+	max-width: 100%;
+	display: block;
+}
+
+/* ============================================
+   5. SWIPER - CONFIGURACIÓN PERSONALIZADA
+   ============================================
+   
+   Estilos adicionales para Swiper dentro del modal.
+   Los estilos base de Swiper vienen del CDN.
+   ============================================ */
+
+.swiper-container {
+	width: 100%;
+	height: 100%;
+	touch-action: pan-y pinch-zoom;
+	position: relative;
+	overflow: hidden;
+}
+
+.swiper-slide {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.swiper-slide img {
+	max-width: 100%;
+	max-height: 100%;
+	aspect-ratio: 1 / 1;
+	object-fit: cover;
+	object-position: center;
+}
+
+/* ============================================
+   6. MEDIA QUERIES - RESPONSIVE
+   ============================================ */
+
+@media (max-width: 600px) {
+	.spot-modal__dialog {
+		padding: 1rem;
+	}
+}
+
