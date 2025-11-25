@@ -265,49 +265,57 @@ button {
     display: block;
 }
 
-/* CONTENEDOR INTRO */
+/* CONTENEDOR INTRO - layout como referencia */
 #intro-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.45);   /* oscuro transparente sobre el video */
     z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;  /* reparte: logo / botón / texto */
-    align-items: center;
-    text-align: center;
-    color: #fff;
-    padding: 3rem 2rem 3rem;         /* margen arriba y abajo */
     pointer-events: auto;
+    background: transparent;          /* sin capa oscura, se ve el video/fondo */
+    font-family: 'Montserrat', sans-serif;
 }
 
-/* ICONO SVG */
+/* LOGO/TÍTULO (logo.svg) arriba */
+#intro-container > a img {
+    position: absolute;
+    top: 40px;
+    left: 60px;
+    width: 520px;                     /* agranda el logo como en la referencia */
+}
+
+/* ICONO SVG ENTRAR centrado */
 .intro-enter-icon {
-    width: 280px;
+    position: absolute;
+    top: 60%;                         /* baja un poco el triángulo */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 380px;
     cursor: pointer;
-    margin: 2rem 0;
     transition: transform 0.2s ease;
 }
 
 .intro-enter-icon:hover {
-    transform: scale(1.07);
+    transform: translate(-50%, -50%) scale(1.05);
 }
 
-/* CAJA AMARILLA */
+/* CAJA AMARILLA pegada a la derecha */
 .intro-info-box {
+    position: absolute;
+    right: 60px;
+    bottom: 60px;
+    width: 32vw;                      /* ancho relativo, similar a tu diseño */
+    max-width: 560px;
     background: #ffe66d;
-    max-width: 720px;
-    padding: 2rem;
-    border-radius: 12px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.3rem;
-    line-height: 1.5;
+    padding: 1.8rem;
+    border-radius: 16px;
+    font-size: 1.1rem;
+    line-height: 1.4;
     color: #000;
     text-align: left;
-    margin-top: 1rem;
-    box-shadow: 0px 4px 20px rgba(0,0,0,0.2);
+    box-shadow: 0px 4px 20px rgba(0,0,0,0.25);
 }
+
 
