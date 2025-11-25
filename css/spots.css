@@ -318,56 +318,83 @@ button {
     box-shadow: 0px 4px 20px rgba(0,0,0,0.25);
 }
 
-/* ================== RESPONSIVE ================== */
+/* ========= RESPONSIVE ========= */
 
-/* Laptops / pantallas medianas */
-@media (max-width: 1200px) {
+/* Tablets / portátiles pequeñas */
+@media (max-width: 1000px) {
     #intro-container > a img {
-        width: 420px;          /* título un poco más chico */
-        left: 40px;
-        top: 35px;
+        top: 4vh;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60vw;
     }
 
     .intro-enter-icon {
-        width: 320px;
-        top: 55%;
+        top: 50vh;
+        width: 40vw;
     }
 
     .intro-info-box {
-        right: 30px;
-        bottom: 30px;
-        width: 34vw;
-        max-width: 420px;
-        font-size: 0.9rem;
+        right: 50%;
+        bottom: 6vh;
+        transform: translateX(50%);
+        width: 80vw;
+        max-width: 80vw;
+        min-width: 0;
+        padding: 1.6rem;
+        border-radius: 14px;
+        font-size: 0.95rem;
     }
 }
 
-/* Tablets y móvil horizontal */
-@media (max-width: 900px) {
-    #intro-container > a img {
-        width: 340px;
-        left: 50%;
-        transform: translateX(-50%);  /* título centrado */
-        top: 24px;
-    }
-
+/* Móvil muy pequeño */
+@media (max-width: 600px) {
     .intro-enter-icon {
-        width: 260px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        top: 48vh;
+        width: 50vw;
     }
 
     .intro-info-box {
-        left: 50%;
-        right: auto;
-        bottom: 24px;
-        width: 90vw;               /* casi todo el ancho */
-        max-width: 90vw;
-        transform: translateX(-50%);
-        font-size: 0.9rem;
-        text-align: left;
+        bottom: 4vh;
+        padding: 1.3rem 1.4rem;
+        font-size: 0.85rem;
     }
+}
+
+
+/* ICONO SVG ENTRAR (CENTRADO) */
+.intro-enter-icon {
+    position: absolute;
+    top: 55vh;             /* un poco abajo del centro vertical */
+    left: 50vw;            /* centro horizontal */
+    transform: translate(-50%, -50%);
+    width: 22vw;           /* escala con el ancho de la pantalla */
+    max-width: 420px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.intro-enter-icon:hover {
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+/* CAJA AMARILLA FIJA ABAJO-DERECHA */
+.intro-info-box {
+    position: absolute;
+    right: 5vw;             /* 5% del ancho desde la derecha */
+    bottom: 8vh;            /* 8% de la altura desde abajo */
+    width: 28vw;            /* proporción fija respecto al ancho */
+    max-width: 520px;
+    min-width: 360px;
+    background: #ffe66d;
+    padding: 1.5vw 1.8vw;   /* padding proporcional */
+    border-radius: 1.2vw;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1vw;         /* texto más pequeño y escalable */
+    line-height: 1.4;
+    color: #000;
+    text-align: left;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
 }
 
 /* Móvil muy pequeño (vertical) */
@@ -385,5 +412,12 @@ button {
     }
 }
 
-
+/* LOGO / TÍTULO ARRIBA-IZQUIERDA */
+#intro-container > a img {
+    position: absolute;
+    top: 6vh;          /* 6% de la altura de la pantalla */
+    left: 6vw;         /* 6% del ancho de la pantalla */
+    width: 32vw;       /* 32% del ancho de la pantalla */
+    max-width: 620px;  /* límite máximo en pantallas muy grandes */
+}
 
