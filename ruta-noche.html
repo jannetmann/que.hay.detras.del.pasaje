@@ -151,7 +151,24 @@
       });
     });
   </script>
+
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const logoLink = document.querySelector("header a");
+  if (!logoLink) return;
+
+  // Para que se vea “clickeable”
+  logoLink.style.cursor = "pointer";
+
+  logoLink.addEventListener("click", (event) => {
+    event.preventDefault();      // evita usar el href (./, index.html, etc.)
+    window.history.back();       // regresa a la página anterior
+  });
+});
+</script>
 </body>
 </html>
+
+
 
 

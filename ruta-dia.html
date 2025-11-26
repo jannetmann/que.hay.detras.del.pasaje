@@ -12,6 +12,13 @@
   <!-- Estilos personalizados para spots -->
   <link rel="stylesheet" href="./css/spots.css">
 </head>
+
+<script>
+document.querySelector("header").addEventListener("click", () => {
+    window.location.href = "./";
+});
+</script>
+
 <body>
   <header>
     <a title="ir a inicio" href="./">
@@ -152,7 +159,22 @@
       });
     });
   </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const logoLink = document.querySelector("header a");
+  if (!logoLink) return;
+
+  // Para que se vea “clickeable”
+  logoLink.style.cursor = "pointer";
+
+  logoLink.addEventListener("click", (event) => {
+    event.preventDefault();      // evita usar el href (./, index.html, etc.)
+    window.history.back();       // regresa a la página anterior
+  });
+});
+</script>
 </body>
 </html>
+
 
 
