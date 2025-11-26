@@ -1,4 +1,110 @@
 /* ============================================
+ SPOTS.CSS - Estilos para la experiencia VR
+ ============================================
+ Este archivo contiene todos los estilos necesarios
+ para la visualización de spots interactivos en 360°.
+ Estructura:
+ 1. Variables y reset básico
+ 2. Contenedores principales
+ 3. Botones de spots
+ 4. Modal y galerías
+ 5. Media queries
+ ============================================ */
+
+/* ============================================
+ 1. VARIABLES Y RESET BÁSICO
+ ============================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  touch-action: none;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+video {
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* ============================================
+ 2. CONTENEDORES PRINCIPALES
+ ============================================ */
+
+/*
+Intro container
+*/
+#intro-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--blanco);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  pointer-events: none;
+}
+
+#intro-container h1 {
+  font-size: 2em;
+  font-weight: bold;
+  color: #fff;
+}
+
+#intro-container p {
+  font-size: 1.5em;
+  color: #fff;
+}
+
+#intro-container button {
+  pointer-events: auto;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#intro-container button:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+/* Contenedor principal de Three.js */
+#container {
+  position: fixed;
+  inset: 0;
+  touch-action: none;
+}
+
+/* Canvas de Three.js - captura eventos de interacción */
+#container canvas {
+  touch-action: none;
+  user-select: none;
+}
+
+/* Contenedor donde se definen y muestran los spots en HTML */
+#spots-container {
+  position: fixed;
+  inset: 0;
+  /* antes estaba display:none; opacity:0
+     lo dejamos visibles por defecto para que no "desaparezcan" */
+  display: block;
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* ============================================
  3. BOTONES DE SPOTS
  ============================================
  Los botones aparecen flotando en la escena 360°
@@ -17,6 +123,7 @@
   align-items: center;
   width: 50px;
   height: 50px;
+  pointer-events: auto; /* importante para que sí se pueda hacer click */
 }
 
 .spot-icon {
@@ -27,361 +134,349 @@
 }
 
 /* ---- ESTADOS DEL ICONO DE CHOFER SEGÚN ENTREVISTA ---- */
-
 /* Estado base del botón de audio (sin entrevista) */
 #audio-btn .spot-icon {
   filter: none;
   transition: filter 0.2s ease;
 }
 
-/* DÍA
-   Entrevista 1 → estado normal (sin invertir) */
+/* DÍA – Entrevista 1 → icono normal */
 #audio-btn.state-1 .spot-icon {
   filter: none;
 }
 
-/* DÍA
-   Entrevista 2 → invertido */
+/* DÍA – Entrevista 2 → icono invertido */
 #audio-btn.state-2 .spot-icon {
   filter: invert(1);
 }
 
-/* NOCHE
-   Entrevista 3 → normal */
+/* NOCHE – Entrevista 3 → icono normal */
 #audio-btn.state-3 .spot-icon {
   filter: none;
 }
 
-/* NOCHE
-   Entrevista 4 → invertido */
+/* NOCHE – Entrevista 4 → icono invertido */
 #audio-btn.state-4 .spot-icon {
   filter: invert(1);
 }
 
-/* Si en algún momento quieres usar is-active en otros spots,
-   puedes seguir usando esta clase general:  */
+/* Si en algún momento usas .is-active en otros spots */
 .spot.is-active .spot-icon {
   filter: hue-rotate(120deg);
 }
 
-
 /* ============================================
-   4. MODAL Y GALERÍAS
-   ============================================
-   
-   El modal se muestra cuando se hace clic en un spot
-   de tipo "gallery". Contiene el contenido de Swiper.
-   ============================================ */
+ 4. MODAL Y GALERÍAS
+ ============================================
+ El modal se muestra cuando se hace clic en un spot
+ de tipo "gallery". Contiene el contenido de Swiper.
+ ============================================ */
 
 /* Modal principal */
 .spot-modal {
-	position: fixed;
-	inset: 0;
-	background: rgba(0, 0, 0, 0.6);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 1.5rem;
-	opacity: 0;
-	pointer-events: none;
-	transition: opacity 200ms ease;
-	z-index: 1000;
-	touch-action: pan-y;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease;
+  z-index: 1000;
+  touch-action: pan-y;
 }
 
 .spot-modal.is-visible {
-	opacity: 1;
-	pointer-events: auto;
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.swiper-button-next, .swiper-button-prev {
-    color: red;
+.swiper-button-next,
+.swiper-button-prev {
+  color: red;
 }
 
 /* Diálogo del modal */
 .spot-modal__dialog {
-	background: #111;
-	padding: 1.5rem;
-	width: min(90vw, 960px);
-	max-height: 90vh;
-	overflow-y: auto;
-	position: relative;
-	touch-action: pan-y pinch-zoom;
+  background: #111;
+  padding: 1.5rem;
+  width: min(90vw, 960px);
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  touch-action: pan-y pinch-zoom;
 }
 
 /* Header del modal */
 .spot-modal__header {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 1rem;
-	margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .spot-modal__title {
-	font-size: 1.25rem;
-	margin: 0;
+  font-size: 1.25rem;
+  margin: 0;
 }
 
 /* Botón de cerrar */
 .spot-modal__close {
-	background: transparent;
-	border: 1px solid #444;
-	color: #f5f5f5;
-	font-size: 1rem;
-	width: 2rem;
-	height: 2rem;
-	cursor: pointer;
-	transition: background-color 0.2s ease;
+  background: transparent;
+  border: 1px solid #444;
+  color: #f5f5f5;
+  font-size: 1rem;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .spot-modal__close:hover {
-	background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Contenido del modal */
 .spot-modal__content img {
-	max-width: 100%;
-	display: block;
+  max-width: 100%;
+  display: block;
 }
 
 /* ============================================
-   5. SWIPER - CONFIGURACIÓN PERSONALIZADA
-   ============================================
-   
-   Estilos adicionales para Swiper dentro del modal.
-   Los estilos base de Swiper vienen del CDN.
-   ============================================ */
+ 5. SWIPER - CONFIGURACIÓN PERSONALIZADA
+ ============================================ */
 
 .swiper-container {
-	width: 100%;
-	height: 100%;
-	touch-action: pan-y pinch-zoom;
-	position: relative;
-	overflow: hidden;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y pinch-zoom;
+  position: relative;
+  overflow: hidden;
 }
 
 .swiper-slide {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .swiper-slide img {
-	max-width: 100%;
-	max-height: 100%;
-	aspect-ratio: 1 / 1;
-	object-fit: cover;
-	object-position: center;
+  max-width: 100%;
+  max-height: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center;
 }
 
 /* ============================================
-   6. MEDIA QUERIES - RESPONSIVE
-   ============================================ */
+ 6. MEDIA QUERIES - RESPONSIVE
+ ============================================ */
 
 @media (max-width: 600px) {
-	.spot-modal__dialog {
-		padding: 1rem;
-	}
+  .spot-modal__dialog {
+    padding: 1rem;
+  }
 }
 
 .spot-modal .swiper-slide img {
-    width: 100% !important;
-    height: auto !important;
-    aspect-ratio: 1920/1280;
-    object-fit: contain;
-    max-width: 1920px;
-    max-height: 1280px;
-    margin: 0 auto;
-    display: block;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 1920/1280;
+  object-fit: contain;
+  max-width: 1920px;
+  max-height: 1280px;
+  margin: 0 auto;
+  display: block;
 }
 
 /* CONTENEDOR INTRO - layout como referencia */
 #intro-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-    pointer-events: auto;
-    background: transparent;          /* sin capa oscura, se ve el video/fondo */
-    font-family: 'Montserrat', sans-serif;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  pointer-events: auto;
+  background: transparent; /* sin capa oscura, se ve el video/fondo */
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* LOGO/TÍTULO (logo.svg) arriba */
 #intro-container > a img {
-    position: absolute;
-    top: 40px;
-    left: 60px;
-    width: 520px;                     /* agranda el logo como en la referencia */
+  position: absolute;
+  top: 40px;
+  left: 60px;
+  width: 520px; /* agranda el logo como en la referencia */
 }
 
 /* ICONO SVG ENTRAR centrado */
 .intro-enter-icon {
-    position: absolute;
-    top: 60%;                         /* baja un poco el triángulo */
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 380px;
-    cursor: pointer;
-    transition: transform 0.2s ease;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 380px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
 .intro-enter-icon:hover {
-    transform: translate(-50%, -50%) scale(1.05);
+  transform: translate(-50%, -50%) scale(1.05);
 }
 
 /* CAJA AMARILLA – escritorio */
 .intro-info-box {
-    position: absolute;
-    right: 40px;          /* más pegado a la derecha */
-    bottom: 40px;         /* más pegado abajo */
-    width: 28vw;          /* un poco más angosto */
-    max-width: 480px;
-    background: #ffe66d;
-    padding: 1.4rem 1.6rem;
-    border-radius: 16px;
-    font-size: 0.95rem;   /* texto más chico */
-    line-height: 1.4;
-    color: #000;
-    text-align: left;
-    box-shadow: 0px 4px 20px rgba(0,0,0,0.25);
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+  width: 28vw;
+  max-width: 480px;
+  background: #ffe66d;
+  padding: 1.4rem 1.6rem;
+  border-radius: 16px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: #000;
+  text-align: left;
+  box-shadow: 0px 4px 20px rgba(0,0,0,0.25);
 }
 
 /* ========= RESPONSIVE ========= */
 
 /* Tablets / portátiles pequeñas */
 @media (max-width: 1000px) {
-    #intro-container > a img {
-        top: 4vh;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 60vw;
-    }
+  #intro-container > a img {
+    top: 4vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60vw;
+  }
 
-    .intro-enter-icon {
-        top: 50vh;
-        width: 40vw;
-    }
+  .intro-enter-icon {
+    top: 50vh;
+    width: 40vw;
+  }
 
-    .intro-info-box {
-        right: 50%;
-        bottom: 6vh;
-        transform: translateX(50%);
-        width: 80vw;
-        max-width: 80vw;
-        min-width: 0;
-        padding: 1.6rem;
-        border-radius: 14px;
-        font-size: 0.95rem;
-    }
+  .intro-info-box {
+    right: 50%;
+    bottom: 6vh;
+    transform: translateX(50%);
+    width: 80vw;
+    max-width: 80vw;
+    min-width: 0;
+    padding: 1.6rem;
+    border-radius: 14px;
+    font-size: 0.95rem;
+  }
 }
 
 /* Móvil muy pequeño */
 @media (max-width: 600px) {
-    .intro-enter-icon {
-        top: 48vh;
-        width: 50vw;
-    }
+  .intro-enter-icon {
+    top: 48vh;
+    width: 50vw;
+  }
 
-    .intro-info-box {
-        bottom: 4vh;
-        padding: 1.3rem 1.4rem;
-        font-size: 0.85rem;
-    }
+  .intro-info-box {
+    bottom: 4vh;
+    padding: 1.3rem 1.4rem;
+    font-size: 0.85rem;
+  }
 }
-
 
 /* ICONO SVG ENTRAR (CENTRADO) */
 .intro-enter-icon {
-    position: absolute;
-    top: 55vh;             /* un poco abajo del centro vertical */
-    left: 50vw;            /* centro horizontal */
-    transform: translate(-50%, -50%);
-    width: 22vw;           /* escala con el ancho de la pantalla */
-    max-width: 420px;
-    cursor: pointer;
-    transition: transform 0.2s ease;
+  position: absolute;
+  top: 55vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  width: 22vw;
+  max-width: 420px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
 .intro-enter-icon:hover {
-    transform: translate(-50%, -50%) scale(1.05);
+  transform: translate(-50%, -50%) scale(1.05);
 }
 
 /* CAJA AMARILLA FIJA ABAJO-DERECHA */
 .intro-info-box {
-    position: absolute;
-    right: 5vw;             /* 5% del ancho desde la derecha */
-    bottom: 8vh;            /* 8% de la altura desde abajo */
-    width: 28vw;            /* proporción fija respecto al ancho */
-    max-width: 520px;
-    min-width: 360px;
-    background: #ffe66d;
-    padding: 1.5vw 1.8vw;   /* padding proporcional */
-    border-radius: 1.2vw;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1vw;         /* texto más pequeño y escalable */
-    line-height: 1.4;
-    color: #000;
-    text-align: left;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  position: absolute;
+  right: 5vw;
+  bottom: 8vh;
+  width: 28vw;
+  max-width: 520px;
+  min-width: 360px;
+  background: #ffe66d;
+  padding: 1.5vw 1.8vw;
+  border-radius: 1.2vw;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1vw;
+  line-height: 1.4;
+  color: #000;
+  text-align: left;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
 }
 
 /* Móvil muy pequeño (vertical) */
 @media (max-width: 600px) {
-    .intro-enter-icon {
-        width: 220px;
-        top: 48%;
-    }
+  .intro-enter-icon {
+    width: 220px;
+    top: 48%;
+  }
 
-    .intro-info-box {
-        padding: 1.2rem 1.3rem;
-        font-size: 0.85rem;
-        bottom: 18px;
-        border-radius: 12px;
-    }
+  .intro-info-box {
+    padding: 1.2rem 1.3rem;
+    font-size: 0.85rem;
+    bottom: 18px;
+    border-radius: 12px;
+  }
 }
 
 /* LOGO / TÍTULO ARRIBA-IZQUIERDA */
 #intro-container > a img {
-    position: absolute;
-    top: 6vh;          /* 6% de la altura de la pantalla */
-    left: 6vw;         /* 6% del ancho de la pantalla */
-    width: 32vw;       /* 32% del ancho de la pantalla */
-    max-width: 620px;  /* límite máximo en pantallas muy grandes */
+  position: absolute;
+  top: 6vh;
+  left: 6vw;
+  width: 32vw;
+  max-width: 620px;
 }
 
-
 header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 113;
-    padding: 1em;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 113;
+  padding: 1em;
 }
 
 header a {
-    width: 30%;
-    max-width: 200px;
+  width: 30%;
+  max-width: 200px;
 }
 
 footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: 105;
-    padding: 3em;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 105;
+  padding: 3em;
 }
 
 footer nav {
-    display: flex;
+  display: flex;
 }
 
 footer .spot {
-    position: relative;
+  position: relative;
 }
 
 #day-night-btn.is-night .spot-icon {
   filter: brightness(1.2) hue-rotate(210deg) saturate(1.3);
 }
+

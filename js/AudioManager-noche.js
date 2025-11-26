@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     './entrevistas/manuel.hernandez.mp3'   // Entrevista 4
   ];
 
-  let currentIndex = -1; // igual que en día
+  let currentIndex = -1;
 
   function stopInterview() {
     interviewAudio.pause();
@@ -61,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
 
 
 
