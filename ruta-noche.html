@@ -20,12 +20,10 @@
     </a>
   </header>
 
-  <!-- PANTALLA DE INTRO -->
+  <!-- INTRO -->
   <section id="intro-container">
-    <!-- BOTÓN ENTRAR SVG -->
     <img id="intro-btn" class="intro-enter-icon" src="./iconos/entrar.svg" alt="Entrar">
 
-    <!-- CAJA AMARILLA -->
     <div class="intro-info-box">
       Entender las <strong>condiciones laborales</strong> de los conductores de microbús en México
       es pieza clave para la movilidad de millones de personas.<br><br>
@@ -35,23 +33,23 @@
     </div>
   </section>
 
-  <!-- Contenedor de la escena 3D -->
+  <!-- Escena 3D -->
   <div id="container" aria-label="Escena de video 360°"></div>
 
-  <!-- Contenedor de spots con botones HTML (chofer + galería) -->
+  <!-- Spots -->
   <section id="spots-container">
-    <!-- ENTREVISTAS / CHOFER -->
+    <!-- Chofer / entrevistas noche -->
     <button class="spot" id="audio-btn" data-lon="170" data-lat="25">
       <img class="spot-icon" src="./iconos/chofer.svg" alt="Audio">
     </button>
 
-    <!-- GALERÍA -->
+    <!-- Galería noche -->
     <button class="spot" id="gallery-btn" data-lon="155" data-lat="-30">
       <img class="spot-icon" src="./iconos/camara.svg" alt="Galería">
     </button>
   </section>
 
-  <!-- MODAL DE GALERÍA -->
+  <!-- Modal galería -->
   <div id="spot-modal" class="spot-modal" aria-hidden="true" role="dialog" aria-modal="true">
     <div class="spot-modal__dialog">
       <div class="spot-modal__header">
@@ -59,49 +57,21 @@
         <button id="modal-close-btn" class="spot-modal__close" type="button" aria-label="Cerrar">&times;</button>
       </div>
       <div class="spot-modal__content">
-        <!-- Swiper -->
         <div id="gallery-modal-1" class="swiper-container">
           <div class="swiper-wrapper">
-            <!-- 👇 Cambia estas rutas por tus fotos de noche cuando las tengas -->
-            <div class="swiper-slide">
-              <img src="./img-noche/1-noche.jpg" alt="Conductor">
-            </div>
-            <div class="swiper-slide">
-              <img src="./img-noche/2-noche.jpg" alt="">
-            </div>
-            <div class="swiper-slide">
-              <img src="./img-noche/3-noche.jpg" alt="">
-            </div>
-            <div class="swiper-slide">
-              <img src="./img-noche/4-noche.jpg" alt="">
-            </div>
-            <div class="swiper-slide">
-              <img src="./img-noche/5-noche.jpg" alt="">
-            </div>
-            <div class="swiper-slide">
-              <img src="./img-noche/6-noche.jpg" alt="">
-            </div>
-            <div class="swiper-slide">
-              <img src="./img-noche/7-noche.jpg" alt="">
-            </div>
-            <div class="swiper-slide">
-              <img src="./img-noche/8-noche.jpg" alt="">
-            </div>
-            <div class="swiper-slide">
-              <img src="./img-noche/9-noche.jpg" alt="">
-            </div>
-            <div class="swiper-slide">
-              <img src="./img-noche/10-noche.jpg" alt="">
-            </div>
-            <div class="swiper-slide">
-              <img src="./img-noche/11-noche.jpg" alt="">
-            </div>
-            <div class="swiper-slide">
-              <img src="./img-noche/12-noche.jpg" alt="">
-            </div>
-            <div class="swiper-slide">
-              <img src="./img-noche/13-noche.jpg" alt="">
-            </div>
+            <div class="swiper-slide"><img src="./img-noche/1-noche.jpg" alt="Conductor"></div>
+            <div class="swiper-slide"><img src="./img-noche/2-noche.jpg" alt=""></div>
+            <div class="swiper-slide"><img src="./img-noche/3-noche.jpg" alt=""></div>
+            <div class="swiper-slide"><img src="./img-noche/4-noche.jpg" alt=""></div>
+            <div class="swiper-slide"><img src="./img-noche/5-noche.jpg" alt=""></div>
+            <div class="swiper-slide"><img src="./img-noche/6-noche.jpg" alt=""></div>
+            <div class="swiper-slide"><img src="./img-noche/7-noche.jpg" alt=""></div>
+            <div class="swiper-slide"><img src="./img-noche/8-noche.jpg" alt=""></div>
+            <div class="swiper-slide"><img src="./img-noche/9-noche.jpg" alt=""></div>
+            <div class="swiper-slide"><img src="./img-noche/10-noche.jpg" alt=""></div>
+            <div class="swiper-slide"><img src="./img-noche/11-noche.jpg" alt=""></div>
+            <div class="swiper-slide"><img src="./img-noche/12-noche.jpg" alt=""></div>
+            <div class="swiper-slide"><img src="./img-noche/13-noche.jpg" alt=""></div>
           </div>
 
           <div class="swiper-pagination"></div>
@@ -112,40 +82,35 @@
     </div>
   </div>
 
-  <!-- Audio de ambiente al entrar (puede ser el mismo o uno distinto de noche) -->
+  <!-- Audios -->
   <audio id="ambient-audio" preload="auto" loop>
     <source src="./audio/ruido.lejano.de.cumbias.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Audio para las entrevistas (se cambia por JS) -->
   <audio id="interview-audio" preload="auto"></audio>
 
-  <!-- VIDEO 360° DE NOCHE -->
+  <!-- Video 360 noche -->
   <video id="video" loop muted crossorigin="anonymous">
     <source src="https://res.cloudinary.com/dpfqraeom/video/upload/v1763918456/detras-del-pasaje-noche.mp4" media="(min-width: 769px)">
     <source src="https://res.cloudinary.com/dpfqraeom/video/upload/v1763922699/detras-del-pasaje-noche-mobile.mp4" media="(max-width: 768px)">
   </video>
 
-  <!-- FOOTER: bocina + cambiar a día -->
+  <!-- Footer -->
   <footer>
     <nav>
-      <!-- Botón bocina (mute) -->
+      <!-- Bocina (mute) -->
       <button class="spot" id="footer-audio-btn">
         <img class="spot-icon" src="./iconos/bocina.svg" alt="Silenciar">
       </button>
 
-      <!-- Botón para ir a la versión de día -->
+      <!-- Volver a versión día -->
       <a href="ruta-dia.html" class="spot" id="day-night-link">
         <img class="spot-icon" src="./iconos/dia.noche.svg" alt="Ir a ruta de día">
       </a>
     </nav>
   </footer>
 
-  <!-- ============================================
-       LIBRERÍAS EXTERNAS
-       ============================================ -->
-
-  <!-- Three.js - Para la escena 3D -->
+  <!-- ========== LIBRERÍAS ========== -->
   <script type="importmap">
     {
       "imports": {
@@ -155,50 +120,38 @@
     }
   </script>
 
-  <!-- Swiper JS - Para las galerías -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-  <!-- ============================================
-       ARCHIVOS JAVASCRIPT DEL PROYECTO
-       ============================================ -->
-  <script src="./js/AudioManager-noche.js"></script> <!-- 👈 usa este para las entrevistas de NOCHE -->
-  <script src="./js/GalleryManager.js"></script>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+
+  <!-- JS del proyecto -->
+  <script src="./js/AudioManager.js"></script> <!-- si luego quieres, aquí podríamos usar AudioManager-noche.js -->
+  <script src="./js/GalleryManager.js"></script>
   <script type="module" src="./js/virtual-reality.js"></script>
 
-  <!-- MUTE GLOBAL DE LA BOCINA (funciona bien, no reinicia) -->
+  <!-- Mute global bocina -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const footerBtn = document.getElementById("footer-audio-btn");
-      const interviewAudio = document.getElementById("interview-audio");
       const ambientAudio = document.getElementById("ambient-audio");
+      const interviewAudio = document.getElementById("interview-audio");
 
-      if (!footerBtn || !interviewAudio || !ambientAudio) return;
+      if (!footerBtn) return;
 
       let isMuted = false;
 
       footerBtn.addEventListener("click", () => {
-        if (!isMuted) {
-          // Mutear todo
-          if (!interviewAudio.paused) {
-            interviewAudio.pause();
-          }
-          if (!ambientAudio.paused) {
-            ambientAudio.pause();
-          }
-          footerBtn.classList.add("is-active");
-          isMuted = true;
-        } else {
-          // Volver a encender SOLO ambiente
-          ambientAudio.currentTime = 0;
-          ambientAudio.play().catch(console.warn);
-          footerBtn.classList.remove("is-active");
-          isMuted = false;
-        }
+        isMuted = !isMuted;
+
+        [ambientAudio, interviewAudio].forEach(el => {
+          if (!el) return;
+          el.muted = isMuted;
+        });
+
+        footerBtn.classList.toggle("is-active", isMuted);
       });
     });
   </script>
-
 </body>
 </html>
+
+

@@ -480,3 +480,7 @@ footer nav {
 footer .spot {
     position: relative;
 }
+
+#day-night-btn.is-night .spot-icon {
+  filter: brightness(1.2) hue-rotate(210deg) saturate(1.3);
+}
