@@ -169,11 +169,14 @@ Intro container
 	pointer-events: auto;
 }
 
+.swiper-button-next, .swiper-button-prev {
+    color: red;
+}
 /* Diálogo del modal */
 .spot-modal__dialog {
 	background: #111;
 	padding: 1.5rem;
-	width: min(90vw, 520px);
+	width: min(90vw, 960px);
 	max-height: 90vh;
 	overflow-y: auto;
 	position: relative;
@@ -423,3 +426,16 @@ Intro container
     max-width: 620px;  /* límite máximo en pantallas muy grandes */
 }
 
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 99; 
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99; 
+}

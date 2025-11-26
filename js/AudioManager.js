@@ -1,5 +1,5 @@
 const audioBtn = document.getElementById('audio-btn');
-
+const audioBtn =
 const ambientAudio = document.getElementById('ambient-audio');        // el de ENTRAR
 const audioConversaciones = document.getElementById('audio-conversaciones'); // audio 1
 const audioClaxon = document.getElementById('audio-claxon');          // audio 2
