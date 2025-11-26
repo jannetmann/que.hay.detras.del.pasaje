@@ -1,44 +1,66 @@
-// Botón de audio
 const audioBtn = document.getElementById('audio-btn');
 
-// Audios disponibles en este botón:
-const audioTracks = [
-    './audio/cumbias.y.conversaciones.mias.mp3',   // 1er audio
-    './audio/vibracion.claxon.mp3'                 // 2do audio
-];
+const ambientAudio = document.getElementById('ambient-audio');        // el de ENTRAR
+const audioConversaciones = document.getElementById('audio-conversaciones'); // audio 1
+const audioClaxon = document.getElementById('audio-claxon');          // audio 2
 
-// Elemento <audio> principal que ya está en el HTML
-const audio = document.getElementById('audio');
+// 0 = nada, 1 = conversaciones, 2 = claxon
+let audioState = 0;
 
-// Audio que suena en la INTRO — debe apagarse cuando se usa el botón
-const introAudio = document.getElementById('intro-audio'); // 👈 lo definiremos abajo
-
-let currentTrack = 0; // índice del audio actual
-
-function toggleAudio() {
-
-    // Si el audio de ENTRAR está sonando → apagarlo
-    if (introAudio && !introAudio.paused) {
-        introAudio.pause();
-        introAudio.currentTime = 0;
-    }
-
-    // Si el botón NO está activo → reproducir audio
-    if (!audioBtn.classList.contains('is-active')) {
-        audioBtn.classList.add('is-active');
-
-        audio.src = audioTracks[currentTrack];   // cargar pista actual
-        audio.currentTime = 0;
-        audio.play();
-
-    } else {
-        // Si el botón está activo → cambiar al siguiente audio
-        currentTrack = (currentTrack + 1) % audioTracks.length;
-        audio.src = audioTracks[currentTrack];
-        audio.currentTime = 0;
-        audio.play();
-    }
+function stopAllButtonAudios() {
+  if (audioConversaciones) {
+    audioConversaciones.pause();
+    audioConversaciones.currentTime = 0;
+  }
+  if (audioClaxon) {
+    audioClaxon.pause();
+    audioClaxon.currentTime = 0;
+  }
 }
 
-// Evento del botón
-audioBtn.addEventListener('click', toggleAudio);
+function toggleAudio() {
+  if (!audioBtn) return;
+
+  // siempre que usamos el botón Audio, pausamos el ambiente
+  if (ambientAudio) {
+    ambientAudio.pause();
+  }
+
+  if (audioState === 0) {
+    // PRIMER CLICK -> conversaciones
+    stopAllButtonAudios();
+    if (audioConversaciones) {
+      audioConversaciones.currentTime = 0;
+      audioConversaciones.play().catch(console.warn);
+    }
+    audioBtn.classList.add('is-active');
+    audioState = 1;
+
+  } else if (audioState === 1) {
+    // SEGUNDO CLICK -> claxon
+    stopAllButtonAudios();
+    if (audioClaxon) {
+      audioClaxon.currentTime = 0;
+      audioClaxon.play().catch(console.warn);
+    }
+    audioBtn.classList.add('is-active');
+    audioState = 2;
+
+  } else {
+    // TERCER CLICK -> apagar audios del botón y (opcional) volver al ambiente
+    stopAllButtonAudios();
+    audioBtn.classList.remove('is-active');
+    audioState = 0;
+
+    // si quieres que regrese el ambiente, descomenta esto:
+    if (ambientAudio) {
+      ambientAudio.currentTime = 0;
+      ambientAudio.play().catch(console.warn);
+    }
+  }
+}
+
+if (audioBtn) {
+  audioBtn.addEventListener('click', toggleAudio);
+}
+
