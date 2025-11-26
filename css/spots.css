@@ -451,16 +451,32 @@ Intro container
     max-width: 620px;  /* límite máximo en pantallas muy grandes */
 }
 
-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: 99; 
-}
 
 header {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 99; 
+    z-index: 113;
+    padding: 1em;
+}
+
+header a {
+    width: 30%;
+    max-width: 200px;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 105;
+    padding: 3em;
+}
+
+footer nav {
+    display: flex;
+}
+
+footer .spot {
+    position: relative;
 }
