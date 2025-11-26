@@ -18,13 +18,53 @@ document.querySelector("header").addEventListener("click", () => {
     window.location.href = "./";
 });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const logo = document.getElementById("header-logo");
+    const intro = document.getElementById("intro-container");
+    const spots = document.getElementById("spots-container");
+    const video = document.getElementById("video");
+    const ambient = document.getElementById("ambient-audio");
+    const interview = document.getElementById("interview-audio");
+
+    if (!logo) return;
+
+    logo.style.cursor = "pointer";
+
+    logo.addEventListener("click", () => {
+        // Mostrar intro
+        intro.style.display = "flex";
+        intro.style.opacity = 1;
+        intro.style.pointerEvents = "auto";
+
+        // Ocultar spots
+        spots.style.opacity = 0;
+        spots.style.pointerEvents = "none";
+
+        // Pausar audios
+        if (ambient) {
+            ambient.pause();
+            ambient.currentTime = 0;
+        }
+        if (interview) {
+            interview.pause();
+            interview.currentTime = 0;
+        }
+
+        // Reiniciar video
+        if (video) {
+            video.pause();
+            video.currentTime = 0;
+        }
+    });
+});
+</script>
 
 <body>
-  <header>
-    <a title="ir a inicio" href="./">
-      <img src="./Logo/logo.svg" alt="logotipo ¿qué hay detrás del pasaje?" width="540">
-    </a>
-  </header>
+
+	<header id="header-logo">
+    <img src="./Logo/logo.svg" alt="logotipo ¿qué hay detrás del pasaje?" width="540">
+</header>
 
   <!-- INTRO -->
   <section id="intro-container">
