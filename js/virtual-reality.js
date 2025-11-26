@@ -43,3 +43,16 @@ enterBtn.addEventListener('click', () => {
         });
     }
 });
+
+const introAudio = document.getElementById('intro-audio');
+
+enterBtn.addEventListener('click', () => {
+
+    // Reproducir audio de entrada
+    introAudio.currentTime = 0;
+    introAudio.loop = true;
+    introAudio.play().catch(err => console.log(err));
+
+    // animaciones...
+});
+
