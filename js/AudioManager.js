@@ -110,54 +110,5 @@ if (footerMuteBtn) {
   footerMuteBtn.addEventListener('click', muteToggle);
 }
 
-// ================== DÍA / NOCHE (CAMBIO DE VIDEO) ==================
-
-const dayNightBtn = document.getElementById('day-night-btn');
-const videoElem   = document.getElementById('video');
-
-let isNight = false; // false = día, true = noche
-
-if (dayNightBtn && videoElem) {
-  dayNightBtn.addEventListener('click', () => {
-    isNight = !isNight;
-
-    const desktopSrc = isNight
-      ? "https://res.cloudinary.com/dpfqraeom/video/upload/v1763918456/detras-del-pasaje-noche.mp4"
-      : "https://res.cloudinary.com/dpfqraeom/video/upload/v1763918447/detras-del-pasaje-dia.mp4";
-
-    const mobileSrc = isNight
-      ? "https://res.cloudinary.com/dpfqraeom/video/upload/v1763922699/detras-del-pasaje-noche-mobile.mp4"
-      : "https://res.cloudinary.com/dpfqraeom/video/upload/v1763922698/detras-del-pasaje-dia-mobile.mp4";
-
-    // Limpiar <source> anteriores
-    while (videoElem.firstChild) {
-      videoElem.removeChild(videoElem.firstChild);
-    }
-
-    // Crear source de escritorio
-    const sourceDesktop = document.createElement('source');
-    sourceDesktop.src = desktopSrc;
-    sourceDesktop.media = "(min-width: 769px)";
-
-    // Crear source de móvil
-    const sourceMobile = document.createElement('source');
-    sourceMobile.src = mobileSrc;
-    sourceMobile.media = "(max-width: 768px)";
-
-    videoElem.appendChild(sourceDesktop);
-    videoElem.appendChild(sourceMobile);
-
-    // Recargar y reproducir
-    videoElem.load();
-    videoElem.play().catch(err => console.warn('No se pudo reproducir el video:', err));
-
-    // (Opcional) cambiar estilo del botón según modo
-    if (isNight) {
-      dayNightBtn.classList.add('is-night');
-    } else {
-      dayNightBtn.classList.remove('is-night');
-    }
-  });
-}
 
 
