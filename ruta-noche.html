@@ -49,6 +49,17 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const dayNightBtn = document.getElementById("day-night-link");
+    if (!dayNightBtn) return;
+
+    dayNightBtn.addEventListener("click", () => {
+        // Visual: invierte el icono
+        dayNightBtn.classList.toggle("is-active");
+    });
+});
+</script>
 
 <body>
 
@@ -141,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </button>
 
       <!-- Volver a versión día -->
-      <a href="ruta-dia.html" class="spot" id="day-night-link">
+      <a href="ruta-dia.html" class="spot is-active" id="day-night-link">
         <img class="spot-icon" src="./iconos/dia.noche.svg" alt="Ir a ruta de día">
       </a>
     </nav>

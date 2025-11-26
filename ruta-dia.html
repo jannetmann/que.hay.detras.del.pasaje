@@ -55,6 +55,18 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const dayNightBtn = document.getElementById("day-night-link");
+    if (!dayNightBtn) return;
+
+    dayNightBtn.addEventListener("click", () => {
+        // Visual: invierte el icono
+        dayNightBtn.classList.toggle("is-active");
+    });
+});
+</script>
+
 <body>
 
 	<header id="header-logo">
