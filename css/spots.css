@@ -57,7 +57,11 @@ Intro container
   color: #fff;
   pointer-events: none;
 }
-
+#header-logo img {
+  width: 45%;
+  max-width: 400px;
+  min-width: 200px;
+}
 #intro-container h1 {
   font-size: 2em;
   font-weight: bold;
@@ -198,9 +202,12 @@ Intro container
   color: red;
 }
 
+.swiper-pagination-bullet-active {
+  background-color: red;
+}
+
 /* Diálogo del modal */
 .spot-modal__dialog {
-  background: #111;
   padding: 1.5rem;
   width: min(90vw, 960px);
   max-height: 90vh;
@@ -451,8 +458,9 @@ header {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 113;
+  z-index: 99999;
   padding: 1em;
+  width: 100%;
 }
 
 header a {
@@ -465,15 +473,18 @@ footer {
   bottom: 0;
   left: 0;
   z-index: 105;
-  padding: 3em;
 }
 
 footer nav {
   display: flex;
+  gap: 1em;
+  padding: 1em;
+  flex-direction: row;
 }
 
 footer .spot {
   position: relative;
+  transform: none;
 }
 
 /* Bocina normal (sonido activo) */
