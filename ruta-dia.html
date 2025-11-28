@@ -153,7 +153,7 @@
   <script src="./js/GalleryManager.js"></script>
   <script type="module" src="./js/virtual-reality.js"></script>
 
-  <!-- Mute global bocina -->
+  <!-- Mute global bocina (icono bocina en footer) -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const footerBtn = document.getElementById("footer-audio-btn");
@@ -177,7 +177,7 @@
     });
   </script>
 
-  <!-- Click en LOGO del header: ir a la página principal -->
+  <!-- Click en logo del header: regresar a la página principal -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const header = document.getElementById("header-logo");
@@ -185,13 +185,16 @@
 
       header.style.cursor = "pointer";
       header.addEventListener("click", () => {
-        // Aquí pon la página principal de tu GitHub Pages
-        window.location.href = "./";
+        // PON AQUÍ LA URL REAL DE TU PÁGINA PRINCIPAL
+        // Por ejemplo, si tu home es "index.html":
+        window.location.href = "index.html";
+        // o si en GitHub Pages es algo tipo:
+        // window.location.href = "https://tuusuario.github.io/tu-repo/";
       });
     });
   </script>
 
-  <!-- Cerrar modal de galería con el tache -->
+  <!-- Cerrar modal con el tache (X) -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const modal = document.getElementById("spot-modal");
@@ -200,13 +203,14 @@
       if (!modal || !closeBtn) return;
 
       closeBtn.addEventListener("click", (event) => {
-        event.preventDefault(); // evita navegaciones raras
+        event.preventDefault();
         modal.classList.remove("is-visible");
       });
     });
   </script>
 </body>
 </html>
+
 
 
 

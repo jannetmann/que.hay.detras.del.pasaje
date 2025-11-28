@@ -188,7 +188,7 @@ Intro container
   opacity: 0;
   pointer-events: none;
   transition: opacity 200ms ease;
-  z-index: 200000;  /* más alto que el header (99999) */
+  z-index: 2000;  /* más alto que el header (99999) */
   touch-action: pan-y;
 }
 
@@ -202,31 +202,31 @@ Intro container
   background-color: rgb(242, 232, 27);
 }
 
-/* Botones Swiper con SVG personalizados */
+/* FLECHAS PERSONALIZADAS SWIPER */
 .swiper-button-next,
 .swiper-button-prev {
-  width: 60px;
-  height: 60px;
+  width: 52px;
+  height: 52px;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: contain;
 }
 
-/* Quitar la flecha default de Swiper (la que se encimaba) */
+/* Ocultar el ícono default de Swiper */
 .swiper-button-next::after,
 .swiper-button-prev::after {
-  content: '';   /* sin texto/flecha */
+  display: none;
 }
 
-/* Icono derecha */
+/* Usa tus SVG */
 .swiper-button-next {
-  background-image: url("../iconos/swipe-right.svg");
+  background-image: url("./iconos/swipe-right.svg");
 }
 
-/* Icono izquierda */
 .swiper-button-prev {
-  background-image: url("../iconos/swipe-left.svg");
+  background-image: url("./iconos/swipe-left.svg");
 }
+
 
 /* Diálogo del modal */
 .spot-modal__dialog {
@@ -249,12 +249,16 @@ justify-content: flex-end;
 
 /* Botón de cerrar con icono SVG */
 .spot-modal__close {
-  background: transparent;
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  width: 40px;
+  height: 40px;
+  background: none;
   border: none;
-  width: 48px;
-  height: 48px;
-  padding: 0;
   cursor: pointer;
+  padding: 0;
+  z-index: 1100;
 }
 
 .spot-modal__close img {
@@ -262,6 +266,7 @@ justify-content: flex-end;
   height: 100%;
   display: block;
 }
+
 
 
 /* ============================================
@@ -470,7 +475,7 @@ header {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 99999;
+  z-index: 90;
   padding: 1em;
   width: 100%;
 }
