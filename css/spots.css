@@ -213,6 +213,7 @@ Intro container
   background-image: url("../iconos/swipe-left.svg");
   background-size: contain;
   background-repeat: no-repeat;
+  background-position: center;
   width: 55px;
   height: 55px;
   left: 25px;
@@ -223,6 +224,7 @@ Intro container
   background-image: url("../iconos/swipe-right.svg");
   background-size: contain;
   background-repeat: no-repeat;
+  background-position: center;
   width: 55px;
   height: 55px;
   right: 25px;
@@ -255,25 +257,29 @@ justify-content: flex-end;
   display: none !important;
 }
 
-/* Botón de cerrar con icono SVG */
-.spot-modal__close {
+
+/* Botón de cerrar (tache) */
+#modal-close-btn {
+  background-image: url("../iconos/tache.svg");
+  background-repeat: no-repeat;
+  background-size: 65%;
+  background-position: center;
+  border: none !important;
+  width: 55px;
+  height: 55px;
   position: absolute;
-  top: 2rem;
-  right: 2rem;
-  width: 40px;
-  height: 40px;
-  background: none;
-  border: none;
+  top: 35px;
+  right: 35px;
   cursor: pointer;
   padding: 0;
-  z-index: 1100;
 }
 
 .spot-modal__close img {
   width: 100%;
   height: 100%;
-  display: block;
+  object-fit: contain;
 }
+
 
 
 
@@ -593,13 +599,14 @@ footer .spot {
   display: none !important;
 }
 
-/* Quitar fondo amarillo del botón */
+/* Quitar solo color/fondo sólido pero mantener el SVG */
 .swiper-button-next,
 .swiper-button-prev {
-  background: none !important;
+  background-color: transparent !important;
   border: none !important;
   box-shadow: none !important;
 }
+
 
 /* Botón de cerrar (solo el tache svg, sin círculo) */
 .spot-modal__close {
