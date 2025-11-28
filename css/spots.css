@@ -1,19 +1,8 @@
 /* ============================================
  SPOTS.CSS - Estilos para la experiencia VR
- ============================================
- Este archivo contiene todos los estilos necesarios
- para la visualización de spots interactivos en 360°.
- Estructura:
- 1. Variables y reset básico
- 2. Contenedores principales
- 3. Botones de spots
- 4. Modal y galerías
- 5. Media queries
  ============================================ */
 
-/* ============================================
- 1. VARIABLES Y RESET BÁSICO
- ============================================ */
+/* ========== 1. RESET BÁSICO ========== */
 
 *,
 *::before,
@@ -26,6 +15,7 @@ body {
   padding: 0;
   margin: 0;
   overflow: hidden;
+  font-family: 'Montserrat', sans-serif;
 }
 
 video {
@@ -34,86 +24,98 @@ video {
   opacity: 0;
 }
 
-/* ============================================
- 2. CONTENEDORES PRINCIPALES
- ============================================ */
+/* ========== 2. CONTENEDORES PRINCIPALES ========== */
 
-/*
-Intro container
-*/
+/* Intro: pantalla de ENTRAR */
 #intro-container {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--blanco);
-  z-index: 1000;
+  z-index: 1500;
+  pointer-events: auto;
+  background: rgba(0, 0, 0, 0.45);
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  text-align: center;
-  color: #fff;
-  pointer-events: none;
+  justify-content: center;
 }
+
+/* Logo en header */
+#header-logo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1600;
+  padding: 1em;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
 #header-logo img {
-  width: 45%;
   max-width: 400px;
+  width: 45%;
   min-width: 200px;
 }
-#intro-container h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #fff;
-}
 
-#intro-container p {
-  font-size: 1.5em;
-  color: #fff;
-}
-
-#intro-container button {
-  pointer-events: auto;
+/* Botón ENTRAR (SVG) */
+.intro-enter-icon {
+  position: absolute;
+  top: 55vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  width: 22vw;
+  max-width: 420px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: transform 0.2s ease;
 }
 
-#intro-container button:hover {
-  background-color: #333;
-  color: #fff;
+.intro-enter-icon:hover {
+  transform: translate(-50%, -50%) scale(1.05);
 }
 
-/* Contenedor principal de Three.js */
+/* Caja amarilla – escritorio */
+.intro-info-box {
+  position: absolute;
+  right: 5vw;
+  bottom: 8vh;
+  width: 28vw;
+  max-width: 520px;
+  min-width: 360px;
+  background: #ffe66d;
+  padding: 1.5vw 1.8vw;
+  border-radius: 1.2vw;
+  font-size: 1vw;
+  line-height: 1.4;
+  color: #000;
+  text-align: left;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+}
+
+/* Contenedor 3D */
 #container {
   position: fixed;
   inset: 0;
   touch-action: none;
 }
 
-/* Canvas de Three.js - captura eventos de interacción */
+/* Canvas de Three.js */
 #container canvas {
   touch-action: none;
   user-select: none;
 }
 
-/* Contenedor donde se definen y muestran los spots en HTML */
+/* Spots (botones flotando) */
 #spots-container {
   position: fixed;
   inset: 0;
-  /* antes estaba display:none; opacity:0
-     lo dejamos visibles por defecto para que no "desaparezcan" */
   display: block;
   opacity: 1;
-  pointer-events: none;
+  pointer-events: none; /* se habilitan por JS */
 }
 
-/* ============================================
- 3. BOTONES DE SPOTS
- ============================================
- Los botones aparecen flotando en la escena 360°
- y se posicionan dinámicamente según las coordenadas 3D
- ============================================ */
+/* ========== 3. BOTONES DE SPOTS ========== */
 
 .spot {
   background: transparent;
@@ -127,7 +129,7 @@ Intro container
   align-items: center;
   width: 50px;
   height: 50px;
-  pointer-events: auto; /* importante para que sí se pueda hacer click */
+  pointer-events: auto;
 }
 
 .spot-icon {
@@ -137,50 +139,27 @@ Intro container
   pointer-events: none;
 }
 
-/* ---- ESTADOS DEL ICONO DE CHOFER SEGÚN ENTREVISTA ---- */
-/* Estado base del botón de audio (sin entrevista) */
+/* Estados específicos de audio (chofer) */
 #audio-btn .spot-icon {
   filter: none;
   transition: filter 0.2s ease;
 }
 
-/* DÍA – Entrevista 1 → icono normal */
-#audio-btn.state-1 .spot-icon {
-  filter: none;
-}
+#audio-btn.state-1 .spot-icon { filter: none; }
+#audio-btn.state-2 .spot-icon { filter: invert(1); }
+#audio-btn.state-3 .spot-icon { filter: none; }
+#audio-btn.state-4 .spot-icon { filter: invert(1); }
 
-/* DÍA – Entrevista 2 → icono invertido */
-#audio-btn.state-2 .spot-icon {
-  filter: invert(1);
-}
-
-/* NOCHE – Entrevista 3 → icono normal */
-#audio-btn.state-3 .spot-icon {
-  filter: none;
-}
-
-/* NOCHE – Entrevista 4 → icono invertido */
-#audio-btn.state-4 .spot-icon {
-  filter: invert(1);
-}
-
-/* Si en algún momento usas .is-active en otros spots */
 .spot.is-active .spot-icon {
   filter: hue-rotate(120deg);
 }
 
-/* ============================================
- 4. MODAL Y GALERÍAS
- ============================================
- El modal se muestra cuando se hace clic en un spot
- de tipo "gallery". Contiene el contenido de Swiper.
- ============================================ */
+/* ========== 4. MODAL Y GALERÍA ========== */
 
-/* Modal principal */
 .spot-modal {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0,0,0,0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -188,7 +167,7 @@ Intro container
   opacity: 0;
   pointer-events: none;
   transition: opacity 200ms ease;
-  z-index: 2000;  /* más alto que el header (99999) */
+  z-index: 2000; /* por encima del header y del 360 */
   touch-action: pan-y;
 }
 
@@ -202,7 +181,7 @@ Intro container
   background-color: rgb(242, 232, 27);
 }
 
-/* Ocultar flechas default */
+/* Ocultar flechas default de Swiper */
 .swiper-button-next::after,
 .swiper-button-prev::after {
   display: none !important;
@@ -230,37 +209,59 @@ Intro container
   right: 25px;
 }
 
-/* Centrado vertical */
+/* Centrado vertical de flechas */
 .swiper-button-next,
 .swiper-button-prev {
   top: 50%;
   transform: translateY(-50%);
 }
 
-/* Botón de cerrar (tache arriba a la derecha) */
+/* Diálogo del modal */
+.spot-modal__dialog {
+  padding: 1.5rem;
+  width: min(90vw, 960px);
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  touch-action: pan-y pinch-zoom;
+}
+
+/* Header del modal */
+.spot-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Ocultamos el título de “Detalle” */
+.spot-modal__title {
+  display: none !important;
+}
+
+/* Botón de cerrar (tache) */
 #modal-close-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  width: 55px;
+  height: 55px;
   position: absolute;
   top: 35px;
   right: 35px;
-  width: 55px;
-  height: 55px;
-  border: none;
-  background: transparent;
-  padding: 0;
   cursor: pointer;
-  z-index: 2100; /* por encima de la foto y las flechas */
+  z-index: 2100;
 }
 
 #modal-close-btn img {
   width: 100%;
   height: 100%;
   display: block;
+  object-fit: contain;
 }
 
-
-/* ============================================
- 5. SWIPER - CONFIGURACIÓN PERSONALIZADA
- ============================================ */
+/* ========== 5. SWIPER ========== */
 
 .swiper-container {
   width: 100%;
@@ -279,94 +280,26 @@ Intro container
 .swiper-slide img {
   max-width: 100%;
   max-height: 100%;
-  aspect-ratio: 1 / 1;
   object-fit: cover;
   object-position: center;
 }
 
-/* ============================================
- 6. MEDIA QUERIES - RESPONSIVE
- ============================================ */
-
-@media (max-width: 600px) {
-  .spot-modal__dialog {
-    padding: 1rem;
-  }
-}
-
+/* Ajuste especial para imágenes dentro del modal */
 .spot-modal .swiper-slide img {
   width: 100% !important;
   height: auto !important;
+  max-height: 80vh;
   aspect-ratio: 1920/1280;
   object-fit: contain;
-  max-width: 1920px;
-  max-height: 1280px;
   margin: 0 auto;
   display: block;
 }
 
-/* CONTENEDOR INTRO - layout como referencia */
-#intro-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1000;
-  pointer-events: auto;
-  background: transparent; /* sin capa oscura, se ve el video/fondo */
-  font-family: 'Montserrat', sans-serif;
-}
+/* ========== 6. RESPONSIVE ========== */
 
-/* LOGO/TÍTULO (logo.svg) arriba */
-#intro-container > a img {
-  position: absolute;
-  top: 40px;
-  left: 60px;
-  width: 520px; /* agranda el logo como en la referencia */
-}
-
-/* ICONO SVG ENTRAR centrado */
-.intro-enter-icon {
-  position: absolute;
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 380px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.intro-enter-icon:hover {
-  transform: translate(-50%, -50%) scale(1.05);
-}
-
-/* CAJA AMARILLA – escritorio */
-.intro-info-box {
-  position: absolute;
-  right: 40px;
-  bottom: 40px;
-  width: 28vw;
-  max-width: 480px;
-  background: #ffe66d;
-  padding: 1.4rem 1.6rem;
-  border-radius: 16px;
-  font-size: 0.95rem;
-  line-height: 1.4;
-  color: #000;
-  text-align: left;
-  box-shadow: 0px 4px 20px rgba(0,0,0,0.25);
-}
-
-/* ========= RESPONSIVE ========= */
-
-/* Tablets / portátiles pequeñas */
 @media (max-width: 1000px) {
-  #intro-container > a img {
-    top: 4vh;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60vw;
+  #header-logo img {
+    max-width: 320px;
   }
 
   .intro-enter-icon {
@@ -387,7 +320,6 @@ Intro container
   }
 }
 
-/* Móvil muy pequeño */
 @media (max-width: 600px) {
   .intro-enter-icon {
     top: 48vh;
@@ -399,86 +331,25 @@ Intro container
     padding: 1.3rem 1.4rem;
     font-size: 0.85rem;
   }
-}
 
-/* ICONO SVG ENTRAR (CENTRADO) */
-.intro-enter-icon {
-  position: absolute;
-  top: 55vh;
-  left: 50vw;
-  transform: translate(-50%, -50%);
-  width: 22vw;
-  max-width: 420px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.intro-enter-icon:hover {
-  transform: translate(-50%, -50%) scale(1.05);
-}
-
-/* CAJA AMARILLA FIJA ABAJO-DERECHA */
-.intro-info-box {
-  position: absolute;
-  right: 5vw;
-  bottom: 8vh;
-  width: 28vw;
-  max-width: 520px;
-  min-width: 360px;
-  background: #ffe66d;
-  padding: 1.5vw 1.8vw;
-  border-radius: 1.2vw;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1vw;
-  line-height: 1.4;
-  color: #000;
-  text-align: left;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-}
-
-/* Móvil muy pequeño (vertical) */
-@media (max-width: 600px) {
-  .intro-enter-icon {
-    width: 220px;
-    top: 48%;
-  }
-
-  .intro-info-box {
-    padding: 1.2rem 1.3rem;
-    font-size: 0.85rem;
-    bottom: 18px;
-    border-radius: 12px;
+  .spot-modal__dialog {
+    padding: 1rem;
   }
 }
 
-/* LOGO / TÍTULO ARRIBA-IZQUIERDA */
-#intro-container > a img {
-  position: absolute;
-  top: 6vh;
-  left: 6vw;
-  width: 32vw;
-  max-width: 620px;
-}
+/* ========== 7. HEADER Y FOOTER ========== */
 
 header {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 90;
-  padding: 1em;
-  width: 100%;
-}
-
-header a {
-  width: 30%;
-  max-width: 200px;
 }
 
 footer {
   position: fixed;
   bottom: 0;
   left: 0;
-  z-index: 105;
+  z-index: 1100;
 }
 
 footer nav {
@@ -503,99 +374,10 @@ footer .spot {
   filter: invert(1);
 }
 
-#day-night-btn.is-night .spot-icon {
-  filter: brightness(1.2) hue-rotate(210deg) saturate(1.3);
-}
-
-/* Cuando el botón de día/noche está activo (invertido) */
+/* Día/noche activo (invertido) */
 #day-night-link.is-active .spot-icon {
-    filter: invert(1);
+  filter: invert(1);
 }
 
-/* Ocultar flechas default */
-.swiper-button-next::after,
-.swiper-button-prev::after {
-  display: none !important;
-}
-
-/* Flecha izquierda personalizada */
-.swiper-button-prev {
-  background-image: url("../iconos/swipe-left.svg");
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: 55px;
-  height: 55px;
-  left: 25px;
-}
-
-/* Flecha derecha personalizada */
-.swiper-button-next {
-  background-image: url("../iconos/swipe-right.svg");
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: 55px;
-  height: 55px;
-  right: 25px;
-}
-
-/* Centrado vertical */
-.swiper-button-next,
-.swiper-button-prev {
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/* Botón tache arriba a la derecha */
-#modal-close-btn {
-  background-image: url("../iconos/tache.svg");
-  background-repeat: no-repeat;
-  background-size: 65%;
-  background-position: center;
-  border: 3px solid #f2e81b;
-  border-radius: 50%;
-  width: 55px;
-  height: 55px;
-  color: transparent;
-  font-size: 0;
-  position: absolute;
-  top: 35px;
-  right: 35px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-#modal-close-btn:hover {
-  transform: scale(1.05);
-}
-
-/* Quitar el círculo amarillo de Swiper */
-.swiper-button-next::after,
-.swiper-button-prev::after {
-  display: none !important;
-}
-
-/* Quitar solo color/fondo sólido pero mantener el SVG */
-.swiper-button-next,
-.swiper-button-prev {
-  background-color: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-
-/* Botón de cerrar (solo el tache svg, sin círculo) */
-.spot-modal__close {
-  background: none !important;
-  border: none !important;
-  padding: 0;
-  width: 48px;
-  height: 48px;
-}
-
-.spot-modal__close img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
 
 
