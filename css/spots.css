@@ -257,36 +257,27 @@ justify-content: flex-end;
   display: none !important;
 }
 
-
-/* Botón tache arriba a la derecha (solo SVG, sin círculo extra) */
+/* Botón de cerrar (tache) */
 #modal-close-btn {
-  background-image: url("../iconos/tache.svg"); /* css/ → ../iconos */
-  background-repeat: no-repeat;
-  background-size: 65%;
-  background-position: center;
-  border: none;          /* sin círculo amarillo; si quieres círculo, pon border */
-  border-radius: 0;      /* 0 = sin círculo, 50% = círculo */
-  width: 55px;
-  height: 55px;
   position: absolute;
   top: 35px;
   right: 35px;
+  width: 55px;
+  height: 55px;
+  background: none;
+  border: none;
+  padding: 0;
   cursor: pointer;
-  padding: 0;
 }
 
-/* Por si queda alguna regla vieja de .spot-modal__close */
-.spot-modal__close {
-  background: none !important;
-  border: none !important;
-  padding: 0;
-}
-
-.spot-modal__close img {
+/* Imagen del tache: ocupa todo el botón */
+#modal-close-btn img {
   width: 100%;
   height: 100%;
+  display: block;
   object-fit: contain;
 }
+
 
 
 
