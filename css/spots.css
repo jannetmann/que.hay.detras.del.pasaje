@@ -237,6 +237,25 @@ Intro container
   transform: translateY(-50%);
 }
 
+/* Botón tache arriba a la derecha (solo SVG) */
+#modal-close-btn {
+  position: absolute;
+  top: 35px;
+  right: 35px;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+
+  background-image: url("../iconos/tache.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  border: none;
+  padding: 0;
+  z-index: 2100; /* por encima de la foto */
+}
+
 
 /* Diálogo del modal */
 .spot-modal__dialog {
@@ -257,26 +276,7 @@ justify-content: flex-end;
   display: none !important;
 }
 
-/* Botón de cerrar (tache) */
-#modal-close-btn {
-  position: absolute;
-  top: 35px;
-  right: 35px;
-  width: 55px;
-  height: 55px;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-}
 
-/* Imagen del tache: ocupa todo el botón */
-#modal-close-btn img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: contain;
-}
 
 
 
