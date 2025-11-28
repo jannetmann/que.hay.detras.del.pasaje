@@ -188,7 +188,7 @@ Intro container
   opacity: 0;
   pointer-events: none;
   transition: opacity 200ms ease;
-  z-index: 1000;
+  z-index: 200000;  /* más alto que el header (99999) */
   touch-action: pan-y;
 }
 
@@ -197,14 +197,37 @@ Intro container
   pointer-events: auto;
 }
 
+/* Paginación (bolitas) en amarillo */
+.swiper-pagination-bullet-active {
+  background-color: rgb(242, 232, 27);
+}
+
+/* Flechas Swiper con iconos SVG */
+.swiper-button-next,
+.swiper-button-prev {
+  width: 56px;
+  height: 56px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: transparent;         /* oculta el ícono por defecto */
+}
+
+/* Flecha derecha */
+.swiper-button-next {
+  background-image: url("../iconos/swipe-right.svg");
+}
+
+/* Flecha izquierda */
+.swiper-button-prev {
+  background-image: url("../iconos/swipe-left.svg");
+}
+
 .swiper-button-next,
 .swiper-button-prev {
   color: rgb(242, 232, 27);
 }
 
-.swiper-pagination-bullet-active {
-  background-color: rgb(242, 232, 27);
-}
 
 /* Diálogo del modal */
 .spot-modal__dialog {
@@ -230,26 +253,28 @@ Intro container
   margin: 0;
 }
 
-/* Botón de cerrar (tache) con estilo amarillo */
+/* Botón de cerrar con icono tache.svg */
 .spot-modal__close {
-  background: transparent;
-  border: 2px solid rgb(242, 232, 27);
-  color: rgb(242, 232, 27);
-  font-size: 1.4rem;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 40px;
+  height: 40px;
   border-radius: 999px;
+  border: 2px solid #f2e81b; /* amarillo del logo */
+  background-color: transparent;
+  background-image: url("../iconos/tache.svg");
+  background-size: 60%;
+  background-repeat: no-repeat;
+  background-position: center;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s ease, transform 0.15s ease;
+  color: transparent;        /* ocultar la “x” de texto */
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .spot-modal__close:hover {
-  background-color: rgba(242, 232, 27, 0.12);
+  background-color: rgba(242, 232, 27, 0.2);
   transform: scale(1.05);
 }
+
+
 
 
 /* Contenido del modal */

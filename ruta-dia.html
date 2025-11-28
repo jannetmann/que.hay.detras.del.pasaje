@@ -74,7 +74,10 @@
     <div class="spot-modal__dialog">
       <div class="spot-modal__header">
         <h2 class="spot-modal__title" data-spot-modal-title>Detalle</h2>
-        <button id="modal-close-btn" class="spot-modal__close" type="button" aria-label="Cerrar">&times;</button>
+        <button id="modal-close-btn" class="spot-modal__close" type="button" aria-label="Cerrar">
+  <img src="./iconos/tache.svg" alt="Cerrar">
+</button>
+
       </div>
       <div class="spot-modal__content">
         <div id="gallery-modal-1" class="swiper-container">
@@ -174,7 +177,7 @@
     });
   </script>
 
-    <!-- Click en logo del header: regresar al índice -->
+  <!-- Click en LOGO del header: ir a la página principal -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const header = document.getElementById("header-logo");
@@ -182,12 +185,13 @@
 
       header.style.cursor = "pointer";
       header.addEventListener("click", () => {
-        window.location.href = "./";
+        // Aquí pon la página principal de tu GitHub Pages
+        window.location.href = "index.html";
       });
     });
   </script>
 
-  <!-- Cerrar modal con el tache (X) -->
+  <!-- Cerrar modal de galería con el tache -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const modal = document.getElementById("spot-modal");
@@ -196,7 +200,7 @@
       if (!modal || !closeBtn) return;
 
       closeBtn.addEventListener("click", (event) => {
-        event.preventDefault();           // por si algún JS quiere navegar
+        event.preventDefault(); // evita navegaciones raras
         modal.classList.remove("is-visible");
       });
     });
@@ -204,22 +208,6 @@
 </body>
 </html>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const logoLink = document.querySelector("header a");
-  if (!logoLink) return;
-
-  // Para que se vea “clickeable”
-  logoLink.style.cursor = "pointer";
-
-  logoLink.addEventListener("click", (event) => {
-    event.preventDefault();      // evita usar el href (./, index.html, etc.)
-    window.history.back();       // regresa a la página anterior
-  });
-});
-</script>
-</body>
-</html>
 
 
 
