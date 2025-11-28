@@ -237,50 +237,25 @@ Intro container
   transform: translateY(-50%);
 }
 
+/* Botón de cerrar (tache arriba a la derecha) */
 #modal-close-btn {
-  background: none !important;
-  border: none !important;
-  width: 55px;
-  height: 55px;
   position: absolute;
   top: 35px;
   right: 35px;
-  cursor: pointer;
+  width: 55px;
+  height: 55px;
+  border: none;
+  background: transparent;
   padding: 0;
-  z-index: 5000;
+  cursor: pointer;
+  z-index: 2100; /* por encima de la foto y las flechas */
 }
 
 #modal-close-btn img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  display: block;
 }
-
-
-
-/* Diálogo del modal */
-.spot-modal__dialog {
-  padding: 1.5rem;
-  width: min(90vw, 960px);
-  max-height: 90vh;
-  overflow-y: auto;
-  position: relative;
-  touch-action: pan-y pinch-zoom;
-}
-
-/* Header del modal */
-.spot-modal__header {
-justify-content: flex-end;
-}
-
-.spot-modal__title {
-  display: none !important;
-}
-
-
-
-
-
 
 
 /* ============================================
