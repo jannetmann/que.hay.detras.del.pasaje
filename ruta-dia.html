@@ -36,8 +36,8 @@
 </head>
 <body>
 
-	<header id="header-logo">
-    <img src="./Logo/logo.svg" alt="logotipo ¿qué hay detrás del pasaje?" width="540">
+<header id="header-logo">
+  <img src="./Logo/logo.svg" alt="logotipo ¿qué hay detrás del pasaje?" width="540">
 </header>
 
   <!-- INTRO -->
@@ -177,16 +177,40 @@
     });
   </script>
 
-  <!-- Click en logo del header: regresar a la página principal -->
+<!-- Click en el logo: volver a la pantalla de ENTRAR en ESTA página -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const header = document.getElementById("header-logo");
-  if (!header) return;
+  const header   = document.getElementById("header-logo");
+  const intro    = document.getElementById("intro-container");
+  const spots    = document.getElementById("spots-container");
+  const ambient  = document.getElementById("ambient-audio");
+  const interview = document.getElementById("interview-audio");
+
+  if (!header || !intro || !spots) return;
 
   header.style.cursor = "pointer";
 
-  header.addEventListener("click", () => {
-    window.location.href = "./index.html";  // ← regresa siempre al inicio
+  header.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    // Mostrar pantalla de ENTRAR
+    intro.style.display = "flex";
+    intro.style.opacity = "1";
+    intro.style.pointerEvents = "auto";
+
+    // Ocultar los spots 360
+    spots.style.opacity = "0";
+    spots.style.pointerEvents = "none";
+
+    // Pausar audios
+    if (ambient) {
+      ambient.pause();
+      ambient.currentTime = 0;
+    }
+    if (interview) {
+      interview.pause();
+      interview.currentTime = 0;
+    }
   });
 });
 </script>

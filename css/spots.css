@@ -202,29 +202,37 @@ Intro container
   background-color: rgb(242, 232, 27);
 }
 
-/* FLECHAS PERSONALIZADAS SWIPER */
-.swiper-button-next,
-.swiper-button-prev {
-  width: 52px;
-  height: 52px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-/* Ocultar el ícono default de Swiper */
+/* Ocultar flechas default */
 .swiper-button-next::after,
 .swiper-button-prev::after {
-  display: none;
+  display: none !important;
 }
 
-/* Usa tus SVG */
-.swiper-button-next {
-  background-image: url("./iconos/swipe-right.svg");
-}
-
+/* Flecha izquierda personalizada */
 .swiper-button-prev {
-  background-image: url("./iconos/swipe-left.svg");
+  background-image: url("../iconos/swipe-left.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 55px;
+  height: 55px;
+  left: 25px;
+}
+
+/* Flecha derecha personalizada */
+.swiper-button-next {
+  background-image: url("../iconos/swipe-right.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 55px;
+  height: 55px;
+  right: 25px;
+}
+
+/* Centrado vertical */
+.swiper-button-next,
+.swiper-button-prev {
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 
