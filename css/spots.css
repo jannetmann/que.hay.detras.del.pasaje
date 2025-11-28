@@ -579,3 +579,33 @@ footer .spot {
   transform: scale(1.05);
 }
 
+/* Quitar el círculo amarillo de Swiper */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  display: none !important;
+}
+
+/* Quitar fondo amarillo del botón */
+.swiper-button-next,
+.swiper-button-prev {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Botón de cerrar (solo el tache svg, sin círculo) */
+.spot-modal__close {
+  background: none !important;
+  border: none !important;
+  padding: 0;
+  width: 48px;
+  height: 48px;
+}
+
+.spot-modal__close img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+

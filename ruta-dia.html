@@ -178,21 +178,19 @@
   </script>
 
   <!-- Click en logo del header: regresar a la página principal -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const header = document.getElementById("header-logo");
-      if (!header) return;
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const header = document.getElementById("header-logo");
+  if (!header) return;
 
-      header.style.cursor = "pointer";
-      header.addEventListener("click", () => {
-        // PON AQUÍ LA URL REAL DE TU PÁGINA PRINCIPAL
-        // Por ejemplo, si tu home es "index.html":
-        window.location.href = "index.html";
-        // o si en GitHub Pages es algo tipo:
-        // window.location.href = "https://tuusuario.github.io/tu-repo/";
-      });
-    });
-  </script>
+  header.style.cursor = "pointer";
+
+  header.addEventListener("click", () => {
+    window.location.href = "./index.html";  // ← regresa siempre al inicio
+  });
+});
+</script>
+
 
   <!-- Cerrar modal con el tache (X) -->
   <script>
