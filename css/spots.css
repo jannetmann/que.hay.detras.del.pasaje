@@ -199,11 +199,11 @@ Intro container
 
 .swiper-button-next,
 .swiper-button-prev {
-  color: red;
+  color: rgb(242, 232, 27);
 }
 
 .swiper-pagination-bullet-active {
-  background-color: red;
+  background-color: rgb(242, 232, 27);
 }
 
 /* Diálogo del modal */
@@ -230,21 +230,27 @@ Intro container
   margin: 0;
 }
 
-/* Botón de cerrar */
+/* Botón de cerrar (tache) con estilo amarillo */
 .spot-modal__close {
   background: transparent;
-  border: 1px solid #444;
-  color: #f5f5f5;
-  font-size: 1rem;
-  width: 2rem;
-  height: 2rem;
+  border: 2px solid rgb(242, 232, 27);
+  color: rgb(242, 232, 27);
+  font-size: 1.4rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, transform 0.15s ease;
 }
 
 .spot-modal__close:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(242, 232, 27, 0.12);
+  transform: scale(1.05);
 }
+
 
 /* Contenido del modal */
 .spot-modal__content img {
