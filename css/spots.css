@@ -48,7 +48,7 @@ video {
   left: 0;
   z-index: 1600;
   padding: 1em;
-  width: 100%;
+  width: auto;
   display: flex;
   justify-content: flex-start;
 }
