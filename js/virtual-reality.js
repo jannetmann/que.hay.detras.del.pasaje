@@ -54,11 +54,18 @@ enterBtn.addEventListener('click', () => {
     opacity: 0,
     display: 'none',
   });
+
   gsap.to("#spots-container", {
     duration: 1,
     opacity: 1,
     display: 'block',
   });
+
+  // 👇 Mostrar pista de arrastre después de entrar
+  if (dragHint) {
+    dragHint.classList.add('is-visible');
+  }
+});
 
   // Ocultar la pista cuando el usuario interactúe por primera vez con el 360
 if (dragHint && container) {
@@ -75,8 +82,6 @@ if (dragHint && container) {
       console.warn('No se pudo reproducir el audio de ambiente:', err);
     });
   }
-});
-
 
 const introAudio = document.getElementById('intro-audio');
 
@@ -89,4 +94,16 @@ enterBtn.addEventListener('click', () => {
 
     // animaciones...
 });
+
+// =======================
+// Ocultar aviso al primer drag
+// =======================
+if (container && dragHint) {
+  const hideHint = () => {
+    dragHint.classList.remove('is-visible');
+  };
+
+  // Se dispara solo una vez, en el primer intento de arrastrar
+  container.addEventListener('pointerdown', hideHint, { once: true });
+}
 
