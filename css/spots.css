@@ -106,6 +106,41 @@ video {
   user-select: none;
 }
 
+/* Cursor de la escena 360 */
+#container canvas {
+  touch-action: none;
+  user-select: none;
+  cursor: grab;          /* 👈 manita normal */
+}
+
+#container canvas.is-dragging {
+  cursor: grabbing;      /* 👈 cuando está arrastrando */
+}
+
+/* Mensaje de ayuda "Arrastra para explorar" */
+.drag-hint {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.8rem 1.4rem;
+  background: rgba(0, 0, 0, 0.75);
+  color: #f2e81b;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  border-radius: 999px;
+  border: 1px solid #f2e81b;
+  z-index: 1500;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* cuando está visible */
+.drag-hint.is-visible {
+  opacity: 1;
+}
+
 /* Spots (botones flotando) */
 #spots-container {
   position: fixed;

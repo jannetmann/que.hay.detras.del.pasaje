@@ -4,6 +4,32 @@ const video = document.getElementById('video');
 const spotsRoot = document.getElementById('spots-container');
 const enterBtn = document.getElementById('intro-btn');
 const ambientAudio = document.getElementById('ambient-audio');
+const dragHint    = document.getElementById('drag-hint');  // 👈 nuevo
+
+// Después de agregar el canvas al DOM
+const canvas = container.querySelector('canvas');
+let hasDragged = false;
+
+if (canvas) {
+  canvas.addEventListener('pointerdown', () => {
+    canvas.classList.add('is-dragging');
+  });
+
+  canvas.addEventListener('pointerup', () => {
+    canvas.classList.remove('is-dragging');
+
+    if (!hasDragged) {
+      hasDragged = true;
+      if (dragHint) {
+        dragHint.classList.remove('is-visible');  // ocultar mensaje
+      }
+    }
+  });
+
+  canvas.addEventListener('pointerleave', () => {
+    canvas.classList.remove('is-dragging');
+  });
+}
 
 
 import { VRScene } from './VRScene.js';
