@@ -4,7 +4,8 @@ const video = document.getElementById('video');
 const spotsRoot = document.getElementById('spots-container');
 const enterBtn = document.getElementById('intro-btn');
 const ambientAudio = document.getElementById('ambient-audio');
-const dragHint    = document.getElementById('drag-hint');  // 👈 nuevo
+const dragHint = document.getElementById('drag-hint');
+
 
 // Después de agregar el canvas al DOM
 const canvas = container.querySelector('canvas');
@@ -58,6 +59,14 @@ enterBtn.addEventListener('click', () => {
     opacity: 1,
     display: 'block',
   });
+
+  // Ocultar la pista cuando el usuario interactúe por primera vez con el 360
+if (dragHint && container) {
+  container.addEventListener('pointerdown', () => {
+    dragHint.classList.add('is-hidden');
+  }, { once: true }); // solo la primera vez
+}
+
 
   // AUDIO AMBIENTE
   if (ambientAudio) {
